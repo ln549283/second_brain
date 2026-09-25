@@ -171,65 +171,6 @@
       "updated": "2026-09-18"
     },
     {
-      "id": "grist-inventory",
-      "name": "Recensement « Grist des Grist »",
-      "type": "project",
-      "category": "Professionnel",
-      "status": "active",
-      "priority": 2,
-      "progress": 76,
-      "energy": "medium",
-      "description": "Inventaire et contrôle des documents Grist et de leurs partages, avec logique de rôles et suivi.",
-      "next": "Stabiliser les contrôles de rôles et le suivi périodique.",
-      "link": "",
-      "tags": [
-        "Grist",
-        "n8n",
-        "Rectorat"
-      ],
-      "note": "Projet professionnel en cours.",
-      "updated": "2026-09-16"
-    },
-    {
-      "id": "perdir",
-      "name": "PERDIR — Pilotage des absences",
-      "type": "project",
-      "category": "Professionnel",
-      "status": "active",
-      "priority": 2,
-      "progress": 84,
-      "energy": "medium",
-      "description": "Fiabilisation des workflows d’absences : absences fantômes, doublons, garde-fous et cohérence des automatismes.",
-      "next": "Finaliser le garde-fou métier demandé puis surveiller les prochaines exécutions.",
-      "link": "",
-      "tags": [
-        "Grist",
-        "workflow",
-        "n8n"
-      ],
-      "note": "Nettoyage des doublons validé.",
-      "updated": "2026-09-16"
-    },
-    {
-      "id": "ipackeps",
-      "name": "IPACKEPS",
-      "type": "project",
-      "category": "Professionnel",
-      "status": "published",
-      "priority": 4,
-      "progress": 100,
-      "energy": "low",
-      "description": "Correction de l’année SCONET et rétablissement de l’import élèves.",
-      "next": "Aucune action tant qu’aucune régression n’apparaît.",
-      "link": "",
-      "tags": [
-        "SCONET",
-        "maintenance"
-      ],
-      "note": "Correctif appliqué et import élèves fonctionnel.",
-      "updated": "2026-09-16"
-    },
-    {
       "id": "appartement-47",
       "name": "Appartement 47 / Maya",
       "type": "idea",
