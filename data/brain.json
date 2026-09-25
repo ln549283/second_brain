@@ -1,9 +1,11 @@
 {
   "meta": {
-    "owner": "Loïc",
+    "owner": "Loïc NEBONNE",
     "updated": "2026-09-25",
-    "version": 1,
-    "principle": "Finir > multiplier"
+    "version": 2,
+    "principle": "Finir > multiplier",
+    "profile": "Loïc",
+    "scope": "personal-only"
   },
   "items": [
     {
@@ -25,7 +27,8 @@
         "énigmes"
       ],
       "note": "Objectif commercial : 1,99–4,99 €. Les énigmes prenaient ~35–40 min avant l’ajout de 10 énigmes.",
-      "updated": "2026-09-25"
+      "updated": "2026-09-25",
+      "parentId": "nibylo-games"
     },
     {
       "id": "meowza",
@@ -46,7 +49,8 @@
         "collection"
       ],
       "note": "Le cœur de gameplay est solide, mais la qualité visuelle/animation a freiné le projet.",
-      "updated": "2026-09-18"
+      "updated": "2026-09-18",
+      "parentId": "nibylo-games"
     },
     {
       "id": "luck-or-suck",
@@ -67,7 +71,8 @@
         "Supabase"
       ],
       "note": "Différenciation perçue forte, mais biais du 50 % et compréhension initiale à challenger.",
-      "updated": "2026-09-23"
+      "updated": "2026-09-23",
+      "parentId": "nibylo-games"
     },
     {
       "id": "keite",
@@ -89,7 +94,8 @@
         "ronds-losanges"
       ],
       "note": "Considéré comme une exécution personnelle d’une mécanique éprouvée. Le concept a aussi été exploré sous des variantes/noms de travail autour d’un Tango-like minimaliste (ronds et losanges).",
-      "updated": "2026-09-21"
+      "updated": "2026-09-21",
+      "parentId": "nibylo-games"
     },
     {
       "id": "whichly",
@@ -109,7 +115,8 @@
         "Nibylo"
       ],
       "note": "Concept jugé encombré/saturé. Projet utile comme apprentissage de publication.",
-      "updated": "2026-09-21"
+      "updated": "2026-09-21",
+      "parentId": "nibylo-games"
     },
     {
       "id": "ascension",
@@ -129,7 +136,8 @@
         "entrepreneuriat"
       ],
       "note": "GDD évolutif. L’interface cible doit rester jeu avant tout, pas dashboard SaaS.",
-      "updated": "2026-08-14"
+      "updated": "2026-08-14",
+      "parentId": "nibylo-games"
     },
     {
       "id": "loremi",
@@ -170,7 +178,12 @@
         "producteurs"
       ],
       "note": "Commission envisagée ~10 %, retrait ou livraison vendeur.",
-      "updated": "2026-09-18"
+      "updated": "2026-09-18",
+      "challenge": {
+        "decision": "incubate",
+        "score": 54,
+        "reason": "Potentiel réel mais marketplace à double acquisition, logistique et liquidité difficiles. À tester seulement par preuve de demande très légère."
+      }
     },
     {
       "id": "appartement-47",
@@ -190,7 +203,8 @@
         "mobile"
       ],
       "note": "Concept premium initialement visé autour de 90–120 min.",
-      "updated": "2026-09-14"
+      "updated": "2026-09-14",
+      "parentId": "nibylo-games"
     },
     {
       "id": "kaelis",
@@ -209,7 +223,8 @@
         "backlog"
       ],
       "note": "À garder visible sans le laisser concurrencer le focus actuel.",
-      "updated": "2026-09-13"
+      "updated": "2026-09-13",
+      "parentId": "lirnos"
     },
     {
       "id": "slotboost",
@@ -229,7 +244,12 @@
         "B2B"
       ],
       "note": "Idée plus ancienne ; pas de validation marché connue.",
-      "updated": "2025-08-08"
+      "updated": "2025-08-08",
+      "challenge": {
+        "decision": "keep",
+        "score": 72,
+        "reason": "Problème B2B clair, monétisable et testable manuellement avant logiciel. Bonne idée à conserver."
+      }
     },
     {
       "id": "artizconnect",
@@ -248,7 +268,12 @@
         "artisans"
       ],
       "note": "Idée ancienne non prioritaire.",
-      "updated": "2025-08-08"
+      "updated": "2025-08-08",
+      "challenge": {
+        "decision": "merge",
+        "score": 38,
+        "reason": "Chevauchement avec Localité et marketplaces locales. Ne mérite pas un projet distinct."
+      }
     },
     {
       "id": "volcano-run",
@@ -267,7 +292,8 @@
         "jeu"
       ],
       "note": "Mis de côté au profit de concepts plus différenciés.",
-      "updated": "2026-09-01"
+      "updated": "2026-09-01",
+      "parentId": "nibylo-games"
     },
     {
       "id": "ninja-fire-ice",
@@ -286,7 +312,8 @@
         "jeu"
       ],
       "note": "Abandonné.",
-      "updated": "2026-09-01"
+      "updated": "2026-09-01",
+      "parentId": "nibylo-games"
     },
     {
       "id": "marches-publics",
@@ -309,22 +336,23 @@
     },
     {
       "id": "crecheops-ai",
-      "name": "CrècheOps AI",
-      "type": "idea",
+      "name": "Projet micro-crèche",
+      "type": "project",
       "category": "Business",
       "status": "archived",
       "priority": 4,
-      "progress": 5,
+      "progress": 32,
       "energy": "low",
-      "description": "SaaS vertical pour micro-crèches : plannings, conformité, facturation, appli parents, occupation et listes d’attente.",
-      "next": "Aucune.",
+      "description": "Projet global de création d’une micro-crèche, incluant l’étude du modèle économique, la sélection de prestataires et l’idée de créer en interne une application de suivi des enfants, contrats et transmissions quotidiennes aux parents.",
+      "next": "Aucune action : projet abandonné.",
       "link": "",
       "tags": [
-        "SaaS",
-        "crèche",
-        "B2B"
+        "micro-crèche",
+        "petite enfance",
+        "business plan",
+        "application"
       ],
-      "note": "Abandonné après comparaison avec Meeko : différenciation jugée insuffisante.",
+      "note": "Projet avancé jusqu’au choix de certains prestataires. Abandonné car le rôle de gestionnaire impliquait trop d’administratif et le business plan montrait une rentabilité trop faible par rapport à l’investissement et à la charge.",
       "updated": "2025-08-08"
     },
     {
@@ -365,19 +393,24 @@
         "contenu"
       ],
       "note": "Projet évoqué brièvement, conservé volontairement dans le second cerveau.",
-      "updated": "2026-09-25"
+      "updated": "2026-09-25",
+      "challenge": {
+        "decision": "archive",
+        "score": 34,
+        "reason": "Faible barrière, monétisation indirecte et concurrence extrême. Ne mérite pas du temps sans angle très distinctif."
+      }
     },
     {
       "id": "lirnos",
       "name": "Lirnos",
-      "type": "project",
+      "type": "universe",
       "category": "Écriture",
       "status": "active",
       "priority": 2,
-      "progress": 38,
+      "progress": 34,
       "energy": "high",
-      "description": "Univers de fantasy personnel et projet de roman/manga autour de Kaelis, Eldenra, l’Atrium, des Lenkar et des Nalkéens.",
-      "next": "Continuer le tome 1 sans ouvrir un nouveau gros chantier narratif.",
+      "description": "Univers créatif de fantasy regroupant le récit principal, Kaelis, le bestiaire et le worldbuilding associé.",
+      "next": "Faire avancer l’œuvre principale avant d’élargir le worldbuilding.",
       "link": "",
       "tags": [
         "roman",
@@ -405,7 +438,8 @@
         "worldbuilding"
       ],
       "note": "Sous-projet créatif distinct de Lirnos.",
-      "updated": "2025-06-14"
+      "updated": "2025-06-14",
+      "parentId": "lirnos"
     },
     {
       "id": "marque-cosmetique",
@@ -425,7 +459,13 @@
         "produit"
       ],
       "note": "Idée complémentaire au projet d’institut.",
-      "updated": "2025-04-27"
+      "updated": "2025-04-27",
+      "parentId": "institut-julie",
+      "challenge": {
+        "decision": "incubate",
+        "score": 48,
+        "reason": "Peut devenir intéressante uniquement si l’institut crée une audience et un canal de vente."
+      }
     },
     {
       "id": "recueil-poetique",
@@ -445,7 +485,12 @@
         "citations"
       ],
       "note": "Projet créatif personnel déjà travaillé.",
-      "updated": "2025-05-16"
+      "updated": "2025-05-16",
+      "challenge": {
+        "decision": "incubate",
+        "score": 43,
+        "reason": "Valeur personnelle forte, faible enjeu économique. À conserver sans priorité."
+      }
     },
     {
       "id": "loto-quine",
@@ -465,7 +510,12 @@
         "quine"
       ],
       "note": "Concept mobile-first avec une UX de jeu de société.",
-      "updated": "2026-08-25"
+      "updated": "2026-08-25",
+      "challenge": {
+        "decision": "incubate",
+        "score": 51,
+        "reason": "Besoin réel mais marché étroit. Intéressant seulement si usage personnel récurrent ou distribution associative."
+      }
     },
     {
       "id": "marketplace-produits",
@@ -484,19 +534,24 @@
         "e-commerce"
       ],
       "note": "Exploration antérieure de plusieurs approches marketplace.",
-      "updated": "2026-02-20"
+      "updated": "2026-02-20",
+      "challenge": {
+        "decision": "merge",
+        "score": 25,
+        "reason": "Ancêtre de Localité ; conserver l’historique mais fusionner conceptuellement."
+      }
     },
     {
       "id": "nibylo-games",
       "name": "Nibylo Games",
-      "type": "project",
+      "type": "universe",
       "category": "Business",
       "status": "active",
-      "priority": 2,
-      "progress": 42,
+      "priority": 1,
+      "progress": 58,
       "energy": "medium",
-      "description": "Marque personnelle d’édition de jeux mobiles simples sur Android, regroupant notamment Whichly, Keite, Meowza et Luck or Suck.",
-      "next": "Publier, mesurer, puis décider quels jeux méritent d’être approfondis.",
+      "description": "Studio personnel de jeux mobiles sous la bannière Nibylo Games. Deux jeux sont déjà sortis, d’autres sont en production, validation ou incubation.",
+      "next": "Conserver un seul jeu en production principale et faire passer les autres en validation, pause ou incubation.",
       "link": "",
       "tags": [
         "jeux",
@@ -525,7 +580,12 @@
         "anti-arnaque"
       ],
       "note": "Concept pensé pour être simple à lancer et crédible.",
-      "updated": "2026-09-21"
+      "updated": "2026-09-21",
+      "challenge": {
+        "decision": "test",
+        "score": 74,
+        "reason": "Douleur crédible, MVP très léger et forte valeur de confiance. Tester avant de construire une app."
+      }
     },
     {
       "id": "users-manuels",
@@ -545,19 +605,24 @@
         "produits"
       ],
       "note": "Projet collectif ancien.",
-      "updated": "2025-05-13"
+      "updated": "2025-05-13",
+      "challenge": {
+        "decision": "archive",
+        "score": 27,
+        "reason": "Ancien projet sans signal récent ; garder l’historique, pas la charge mentale."
+      }
     },
     {
       "id": "thriller-lecteur-enqueteur",
-      "name": "Thriller — le lecteur mène l’enquête",
+      "name": "Les habitués",
       "type": "project",
       "category": "Écriture",
       "status": "paused",
       "priority": 4,
-      "progress": 14,
+      "progress": 16,
       "energy": "high",
-      "description": "Thriller où le lecteur récolte progressivement les indices comme un enquêteur, avec narration passant d’un personnage à l’autre, fausses pistes et révélation graduelle du meurtre, du mobile et des circonstances.",
-      "next": "Conserver les deux chapitres existants et ne reprendre qu’avec une structure d’enquête verrouillée.",
+      "description": "Roman thriller déjà commencé dans lequel le lecteur mène progressivement l’enquête à travers plusieurs points de vue, indices et fausses pistes.",
+      "next": "Relire les chapitres existants et figer la structure de l’enquête avant de poursuivre l’écriture.",
       "link": "",
       "tags": [
         "thriller",
@@ -565,7 +630,7 @@
         "roman",
         "mystère"
       ],
-      "note": "Projet exploratoire avec environ deux chapitres déjà évoqués.",
+      "note": "Roman commencé. Ancien libellé du Second Brain : « Thriller — le lecteur mène l’enquête ».",
       "updated": "2026-09-13"
     },
     {
@@ -586,7 +651,12 @@
         "animation"
       ],
       "note": "Titre et concept validés lors d’un échange court.",
-      "updated": "2025-06-13"
+      "updated": "2025-06-13",
+      "challenge": {
+        "decision": "merge",
+        "score": 45,
+        "reason": "À fusionner avec le carnet/recueil introspectif plutôt que créer trois chantiers d’écriture."
+      }
     },
     {
       "id": "carnet-train",
@@ -606,7 +676,12 @@
         "développement personnel"
       ],
       "note": "Concept accepté puis laissé au stade de structure.",
-      "updated": "2025-06-13"
+      "updated": "2025-06-13",
+      "challenge": {
+        "decision": "incubate",
+        "score": 58,
+        "reason": "Concept éditorial identifiable mais doit rester secondaire face à Lirnos et Les habitués."
+      }
     },
     {
       "id": "escape-hebergeurs",
@@ -627,7 +702,12 @@
         "licence"
       ],
       "note": "Piste pensée avec des scénarios déclinables : mystère créole, volcan, pirates, botanique, etc.",
-      "updated": "2026-09-15"
+      "updated": "2026-09-15",
+      "challenge": {
+        "decision": "keep",
+        "score": 76,
+        "reason": "B2B simple à tester localement, produit réutilisable et distribution ciblée. Bon ratio risque/temps."
+      }
     },
     {
       "id": "skillmatch-ai",
@@ -648,7 +728,12 @@
         "services"
       ],
       "note": "Concept exploré brièvement, sans validation.",
-      "updated": "2025-08-08"
+      "updated": "2025-08-08",
+      "challenge": {
+        "decision": "archive",
+        "score": 31,
+        "reason": "Marketplace + IA trop générique, acquisition des deux côtés coûteuse et différenciation faible."
+      }
     },
     {
       "id": "safemind",
@@ -669,7 +754,12 @@
         "bien-être"
       ],
       "note": "Concept exploré brièvement.",
-      "updated": "2025-08-08"
+      "updated": "2025-08-08",
+      "challenge": {
+        "decision": "archive",
+        "score": 29,
+        "reason": "Marché saturé, risques produit élevés et valeur difficile à défendre sans avantage spécifique."
+      }
     },
     {
       "id": "micro-saas-b2b-specialise",
@@ -689,7 +779,12 @@
         "automatisation"
       ],
       "note": "Niches évoquées : esthétique, petite enfance, artisans et professions libérales.",
-      "updated": "2026-09-12"
+      "updated": "2026-09-12",
+      "challenge": {
+        "decision": "keep",
+        "score": 78,
+        "reason": "Bonne stratégie-cadre si elle part d’un problème payé avant automatisation. À garder comme méthode, pas comme produit."
+      }
     },
     {
       "id": "mecanique-idle-multi-skins",
@@ -710,7 +805,8 @@
         "skins"
       ],
       "note": "Idée générique évoquée comme piste de production répétable.",
-      "updated": "2026-09-13"
+      "updated": "2026-09-13",
+      "parentId": "nibylo-games"
     },
     {
       "id": "unwrap",
@@ -731,7 +827,8 @@
         "mobile"
       ],
       "note": "Concept prototypé rapidement en Phaser/TypeScript avec profondeur, animation et révélation progressive.",
-      "updated": "2026-09-21"
+      "updated": "2026-09-21",
+      "parentId": "nibylo-games"
     },
     {
       "id": "les-lieux-effaces",
@@ -752,7 +849,8 @@
         "énigmes"
       ],
       "note": "Concept pensé comme une série de lieux autonomes reliés par une identité commune.",
-      "updated": "2026-09-15"
+      "updated": "2026-09-15",
+      "parentId": "nibylo-games"
     },
     {
       "id": "budget-enveloppes-famille",
@@ -775,5 +873,36 @@
       "note": "Projet d’organisation personnelle, pas un produit à commercialiser.",
       "updated": "2026-09-16"
     }
-  ]
+  ],
+  "rules": {
+    "transitions": {
+      "complete": {
+        "status": "completed",
+        "progress": 100,
+        "energy": "low"
+      },
+      "archive": {
+        "status": "archived",
+        "progress": null,
+        "priority": 4,
+        "energy": "low"
+      },
+      "activate": {
+        "status": "active",
+        "progressMin": 1
+      },
+      "pause": {
+        "status": "paused"
+      },
+      "incubate": {
+        "status": "idea",
+        "priority": 4,
+        "progressMax": 20
+      }
+    },
+    "focus": {
+      "maxActiveUniverses": 3,
+      "maxPrimaryProjectsPerUniverse": 1
+    }
+  }
 }
