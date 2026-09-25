@@ -80,11 +80,11 @@
         <label class="wide">Nom<input id="itemName" required></label>
         <label>Type<select id="itemType"><option value="project">Projet</option><option value="idea">Idée</option><option value="universe">Univers</option></select></label>
         <label>Catégorie<select id="itemCategory"><option>Jeux</option><option>Business</option><option>Produit</option><option>Écriture</option><option>Personnel</option><option>Autre</option></select></label>
-        <label>État<select id="itemStatus"><option value="active">Actif</option><option value="production">Production</option><option value="validation">À valider</option><option value="paused">Pause</option><option value="idea">Idée</option><option value="published">Publié</option><option value="completed">Terminé</option><option value="archived">Archivé</option></select></label>
+        <label>État<select id="itemStatus" class="status-select"><option value="active">● En cours</option><option value="production">● En production</option><option value="validation">● En attente</option><option value="paused">● En pause</option><option value="idea">● À étudier</option><option value="published">● Publié</option><option value="completed">● Terminé</option><option value="archived">● Abandonné / archivé</option></select></label>
         <label>Priorité<select id="itemPriority"><option value="1">P1</option><option value="2">P2</option><option value="3">P3</option><option value="4">P4</option></select></label>
         <label class="wide">Description<textarea id="itemDescription" rows="4"></textarea></label>
         <label class="wide">Prochaine action<input id="itemNext"></label>
-        <label>Progression<input id="itemProgress" type="number" min="0" max="100"></label>
+        <label>Progression (%)<div class="progress-input"><input id="itemProgress" type="number" min="0" max="100" step="1"><span>%</span></div></label>
         <label>Énergie<select id="itemEnergy"><option value="low">Faible</option><option value="medium">Moyenne</option><option value="high">Forte</option></select></label>
         <label class="wide">Lien<input id="itemLink" type="url"></label>
         <label class="wide">Tags<input id="itemTags"></label>
