@@ -544,6 +544,171 @@
       ],
       "note": "Projet collectif ancien.",
       "updated": "2025-05-13"
+    },
+    {
+      "id": "thriller-lecteur-enqueteur",
+      "name": "Thriller — le lecteur mène l’enquête",
+      "type": "project",
+      "category": "Écriture",
+      "status": "paused",
+      "priority": 4,
+      "progress": 14,
+      "energy": "high",
+      "description": "Thriller où le lecteur récolte progressivement les indices comme un enquêteur, avec narration passant d’un personnage à l’autre, fausses pistes et révélation graduelle du meurtre, du mobile et des circonstances.",
+      "next": "Conserver les deux chapitres existants et ne reprendre qu’avec une structure d’enquête verrouillée.",
+      "link": "",
+      "tags": [
+        "thriller",
+        "enquête",
+        "roman",
+        "mystère"
+      ],
+      "note": "Projet exploratoire avec environ deux chapitres déjà évoqués.",
+      "updated": "2026-09-13"
+    },
+    {
+      "id": "chroniques-lacher-prise",
+      "name": "Chroniques d’un gars qui n’arrivait pas à lâcher prise",
+      "type": "idea",
+      "category": "Écriture",
+      "status": "idea",
+      "priority": 4,
+      "progress": 6,
+      "energy": "medium",
+      "description": "Projet introspectif initialement envisagé comme mini-série animée autour du contrôle, du lâcher-prise et de situations du quotidien.",
+      "next": "Garder le concept au parking jusqu’à ce qu’un format précis s’impose.",
+      "link": "",
+      "tags": [
+        "mini-série",
+        "introspection",
+        "animation"
+      ],
+      "note": "Titre et concept validés lors d’un échange court.",
+      "updated": "2025-06-13"
+    },
+    {
+      "id": "carnet-train",
+      "name": "Le carnet trouvé dans un train",
+      "type": "idea",
+      "category": "Écriture",
+      "status": "idea",
+      "priority": 4,
+      "progress": 8,
+      "energy": "medium",
+      "description": "Livre introspectif sous forme d’un carnet trouvé dans un train, construit autour d’environ 25 chapitres/questions et d’un arc allant du besoin de contrôle vers une forme de libération intérieure.",
+      "next": "Conserver l’ossature et le ton sans lancer la rédaction maintenant.",
+      "link": "",
+      "tags": [
+        "livre",
+        "introspection",
+        "développement personnel"
+      ],
+      "note": "Concept accepté puis laissé au stade de structure.",
+      "updated": "2025-06-13"
+    },
+    {
+      "id": "escape-hebergeurs",
+      "name": "Escape game familial pour hébergeurs touristiques",
+      "type": "idea",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 9,
+      "energy": "medium",
+      "description": "Expérience d’enquête/escape autonome vendue en licence B2B aux petits hébergeurs touristiques, qui peuvent ensuite la proposer à leurs voyageurs.",
+      "next": "Ne tester qu’avec 3 à 5 hébergeurs intéressés avant de produire un catalogue.",
+      "link": "",
+      "tags": [
+        "escape",
+        "tourisme",
+        "B2B",
+        "licence"
+      ],
+      "note": "Piste pensée avec des scénarios déclinables : mystère créole, volcan, pirates, botanique, etc.",
+      "updated": "2026-09-15"
+    },
+    {
+      "id": "skillmatch-ai",
+      "name": "SkillMatch AI",
+      "type": "idea",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 3,
+      "energy": "medium",
+      "description": "SaaS de micro-prestations spécialisées avec briefs, matching et suivi assistés par IA.",
+      "next": "Rester au parking tant qu’aucun marché précis ni premier segment n’est choisi.",
+      "link": "",
+      "tags": [
+        "SaaS",
+        "IA",
+        "marketplace",
+        "services"
+      ],
+      "note": "Concept exploré brièvement, sans validation.",
+      "updated": "2025-08-08"
+    },
+    {
+      "id": "safemind",
+      "name": "SafeMind",
+      "type": "idea",
+      "category": "Produit",
+      "status": "idea",
+      "priority": 4,
+      "progress": 3,
+      "energy": "medium",
+      "description": "Application mobile de journal émotionnel assisté par IA, avec suivi d’humeur et dimension de soutien anonyme.",
+      "next": "Ne pas développer sans différenciation forte et validation d’usage.",
+      "link": "",
+      "tags": [
+        "app",
+        "IA",
+        "journal",
+        "bien-être"
+      ],
+      "note": "Concept exploré brièvement.",
+      "updated": "2025-08-08"
+    },
+    {
+      "id": "micro-saas-b2b-specialise",
+      "name": "Micro-SaaS B2B ultra-spécialisé",
+      "type": "idea",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 7,
+      "energy": "medium",
+      "description": "Approche consistant à vendre d’abord un service très ciblé à une niche, puis automatiser progressivement les relances, devis, réservations, documents, rappels et reporting dans un micro-SaaS.",
+      "next": "Ne choisir une niche que lorsqu’un problème récurrent et payant est confirmé.",
+      "link": "",
+      "tags": [
+        "micro-SaaS",
+        "B2B",
+        "automatisation"
+      ],
+      "note": "Niches évoquées : esthétique, petite enfance, artisans et professions libérales.",
+      "updated": "2026-09-12"
+    },
+    {
+      "id": "mecanique-idle-multi-skins",
+      "name": "Mécanique de jeu déclinable en plusieurs skins",
+      "type": "idea",
+      "category": "Jeux",
+      "status": "idea",
+      "priority": 4,
+      "progress": 4,
+      "energy": "medium",
+      "description": "Concept de mécanique centrale simple, inspirée des jeux idle, conçue pour être déclinée rapidement sous plusieurs thèmes ou skins.",
+      "next": "Ne reprendre que si une mécanique suffisamment originale est trouvée avant le thème.",
+      "link": "",
+      "tags": [
+        "idle",
+        "mobile",
+        "mécanique",
+        "skins"
+      ],
+      "note": "Idée générique évoquée comme piste de production répétable.",
+      "updated": "2026-09-13"
     }
   ]
 }
