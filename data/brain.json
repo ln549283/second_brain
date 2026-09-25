@@ -364,6 +364,125 @@
       ],
       "note": "Projet évoqué brièvement, conservé volontairement dans le second cerveau.",
       "updated": "2026-09-25"
+    },
+    {
+      "id": "lirnos",
+      "name": "Lirnos",
+      "type": "project",
+      "category": "Écriture",
+      "status": "active",
+      "priority": 2,
+      "progress": 38,
+      "energy": "high",
+      "description": "Univers de fantasy personnel et projet de roman/manga autour de Kaelis, Eldenra, l’Atrium, des Lenkar et des Nalkéens.",
+      "next": "Continuer le tome 1 sans ouvrir un nouveau gros chantier narratif.",
+      "link": "",
+      "tags": [
+        "roman",
+        "fantasy",
+        "univers"
+      ],
+      "note": "Projet créatif de fond, avec bible d’univers et scènes déjà travaillées.",
+      "updated": "2026-09-25"
+    },
+    {
+      "id": "lirnos-bestiaire",
+      "name": "Entre Brume et Crocs — bestiaire de Lirnos",
+      "type": "project",
+      "category": "Écriture",
+      "status": "paused",
+      "priority": 4,
+      "progress": 22,
+      "energy": "medium",
+      "description": "Bestiaire de Lirnos présenté comme le journal de bord d’une exploratrice, avec fiches de créatures et commentaires évolutifs.",
+      "next": "Le reprendre uniquement lorsqu’il sert directement Lirnos.",
+      "link": "",
+      "tags": [
+        "Lirnos",
+        "bestiaire",
+        "worldbuilding"
+      ],
+      "note": "Sous-projet créatif distinct de Lirnos.",
+      "updated": "2025-06-14"
+    },
+    {
+      "id": "marque-cosmetique",
+      "name": "Marque cosmétique maison",
+      "type": "idea",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 8,
+      "energy": "high",
+      "description": "Créer progressivement une petite marque cosmétique liée à l’univers de l’institut, en commençant par un produit signature.",
+      "next": "Rester au parking tant qu’il n’existe pas de canal de distribution crédible.",
+      "link": "",
+      "tags": [
+        "cosmétique",
+        "marque",
+        "produit"
+      ],
+      "note": "Idée complémentaire au projet d’institut.",
+      "updated": "2025-04-27"
+    },
+    {
+      "id": "recueil-poetique",
+      "name": "Recueil poétique",
+      "type": "project",
+      "category": "Écriture",
+      "status": "paused",
+      "priority": 4,
+      "progress": 20,
+      "energy": "medium",
+      "description": "Recueil personnel mêlant textes, citations, photos et mise en page pour impression.",
+      "next": "Conserver comme projet créatif sans contrainte de publication.",
+      "link": "",
+      "tags": [
+        "poésie",
+        "recueil",
+        "citations"
+      ],
+      "note": "Projet créatif personnel déjà travaillé.",
+      "updated": "2025-05-16"
+    },
+    {
+      "id": "loto-quine",
+      "name": "Gestionnaire de loto / quine familial",
+      "type": "idea",
+      "category": "Produit",
+      "status": "idea",
+      "priority": 4,
+      "progress": 12,
+      "energy": "medium",
+      "description": "Application web/mobile pour gérer des parties de loto/quine : sessions, joueurs, cartons, mises, gagnants, historique et statistiques.",
+      "next": "Garder au parking jusqu’à un besoin concret.",
+      "link": "",
+      "tags": [
+        "app",
+        "loto",
+        "quine"
+      ],
+      "note": "Concept mobile-first avec une UX de jeu de société.",
+      "updated": "2026-08-25"
+    },
+    {
+      "id": "marketplace-produits",
+      "name": "Marketplace de produits physiques",
+      "type": "idea",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 5,
+      "energy": "medium",
+      "description": "Ancienne piste de marketplace multi-vendeur de produits physiques, étudiée avant Localité.",
+      "next": "Conserver comme piste historique, sans la lancer séparément de Localité.",
+      "link": "",
+      "tags": [
+        "marketplace",
+        "e-commerce"
+      ],
+      "note": "Exploration antérieure de plusieurs approches marketplace.",
+      "updated": "2026-02-20"
     }
   ]
 }
