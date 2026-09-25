@@ -1,0 +1,368 @@
+{
+  "meta": {
+    "owner": "Loïc",
+    "updated": "2026-09-25",
+    "version": 1,
+    "principle": "Finir > multiplier"
+  },
+  "items": [
+    {
+      "id": "project-4",
+      "name": "Project_4 — jeu d’énigmes premium",
+      "type": "project",
+      "category": "Jeux",
+      "status": "production",
+      "priority": 1,
+      "progress": 78,
+      "energy": "high",
+      "description": "Jeu d’énigmes premium mobile. Vertical slice validé, production finale engagée avec cohérence visuelle et sonore.",
+      "next": "Terminer la production finale puis lancer un playtest complet début → fin.",
+      "link": "https://github.com/ln549283/project_4",
+      "tags": [
+        "Godot",
+        "mobile",
+        "premium",
+        "énigmes"
+      ],
+      "note": "Objectif commercial : 1,99–4,99 €. Les énigmes prenaient ~35–40 min avant l’ajout de 10 énigmes.",
+      "updated": "2026-09-25"
+    },
+    {
+      "id": "meowza",
+      "name": "Meowza",
+      "type": "project",
+      "category": "Jeux",
+      "status": "paused",
+      "priority": 2,
+      "progress": 62,
+      "energy": "high",
+      "description": "Puzzle logique SAME/DIFFERENT avec méta-jeu de collection de chats et arbre à chat. Ambition de rendu très juicy.",
+      "next": "Reprendre uniquement avec une décision claire sur le pipeline visuel et le moteur.",
+      "link": "https://github.com/ln549283/Meowza-Codex",
+      "tags": [
+        "puzzle",
+        "chats",
+        "mobile",
+        "collection"
+      ],
+      "note": "Le cœur de gameplay est solide, mais la qualité visuelle/animation a freiné le projet.",
+      "updated": "2026-09-18"
+    },
+    {
+      "id": "luck-or-suck",
+      "name": "Luck or Suck",
+      "type": "project",
+      "category": "Jeux",
+      "status": "validation",
+      "priority": 2,
+      "progress": 72,
+      "energy": "medium",
+      "description": "Hyper-casual de prise de risque : prédire plus haut/bas en 3 secondes, streak, multiplicateur et coffre.",
+      "next": "Trancher la mécanique finale après test réel : conserver, pivoter ou abandonner.",
+      "link": "https://github.com/ln549283/luckorsuck",
+      "tags": [
+        "hyper-casual",
+        "PWA",
+        "mobile",
+        "Supabase"
+      ],
+      "note": "Différenciation perçue forte, mais biais du 50 % et compréhension initiale à challenger.",
+      "updated": "2026-09-23"
+    },
+    {
+      "id": "keite",
+      "name": "Keite",
+      "type": "project",
+      "category": "Jeux",
+      "status": "published",
+      "priority": 3,
+      "progress": 100,
+      "energy": "low",
+      "description": "Puzzle mobile simple déjà publié sous Nibylo Games.",
+      "next": "Mesurer les signaux réels avant d’investir davantage.",
+      "link": "",
+      "tags": [
+        "puzzle",
+        "publié",
+        "Nibylo"
+      ],
+      "note": "Considéré comme une exécution personnelle d’une mécanique éprouvée.",
+      "updated": "2026-09-21"
+    },
+    {
+      "id": "whichly",
+      "name": "Whichly / Witchly",
+      "type": "project",
+      "category": "Jeux",
+      "status": "published",
+      "priority": 3,
+      "progress": 100,
+      "energy": "low",
+      "description": "Jeu de questions à deux choix, publié rapidement pour tester le pipeline de sortie.",
+      "next": "Observer les métriques et ne pas surinvestir sans traction.",
+      "link": "",
+      "tags": [
+        "quiz",
+        "publié",
+        "Nibylo"
+      ],
+      "note": "Concept jugé encombré/saturé. Projet utile comme apprentissage de publication.",
+      "updated": "2026-09-21"
+    },
+    {
+      "id": "ascension",
+      "name": "ASCENSION",
+      "type": "project",
+      "category": "Jeux",
+      "status": "paused",
+      "priority": 3,
+      "progress": 45,
+      "energy": "high",
+      "description": "Jeu de gestion entrepreneurial game-first : bureau vivant, produits, fournisseurs, marketing et croissance.",
+      "next": "Ne reprendre qu’après clôture d’un projet actif prioritaire.",
+      "link": "",
+      "tags": [
+        "tycoon",
+        "gestion",
+        "entrepreneuriat"
+      ],
+      "note": "GDD évolutif. L’interface cible doit rester jeu avant tout, pas dashboard SaaS.",
+      "updated": "2026-08-14"
+    },
+    {
+      "id": "loremi",
+      "name": "Loremi",
+      "type": "project",
+      "category": "Business",
+      "status": "validation",
+      "priority": 2,
+      "progress": 28,
+      "energy": "medium",
+      "description": "Micro-agence locale : sites vitrines simples et automatisations Grist + n8n, sans dépenses avant premières ventes.",
+      "next": "Faire une première vague courte de prospection et mesurer les réponses.",
+      "link": "",
+      "tags": [
+        "revenu",
+        "service",
+        "automatisation",
+        "La Réunion"
+      ],
+      "note": "Objectif : 500–2 000 €/mois. Zone initiale Saint-André → Saint-Denis.",
+      "updated": "2026-09-15"
+    },
+    {
+      "id": "localite",
+      "name": "Localité",
+      "type": "project",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 10,
+      "energy": "high",
+      "description": "Marketplace locale reliant agriculteurs, pêcheurs et artisans avec particuliers et professionnels.",
+      "next": "Rester au parking tant qu’aucune preuve de demande n’existe.",
+      "link": "",
+      "tags": [
+        "marketplace",
+        "local",
+        "producteurs"
+      ],
+      "note": "Commission envisagée ~10 %, retrait ou livraison vendeur.",
+      "updated": "2026-09-18"
+    },
+    {
+      "id": "grist-inventory",
+      "name": "Recensement « Grist des Grist »",
+      "type": "project",
+      "category": "Professionnel",
+      "status": "active",
+      "priority": 2,
+      "progress": 76,
+      "energy": "medium",
+      "description": "Inventaire et contrôle des documents Grist et de leurs partages, avec logique de rôles et suivi.",
+      "next": "Stabiliser les contrôles de rôles et le suivi périodique.",
+      "link": "",
+      "tags": [
+        "Grist",
+        "n8n",
+        "Rectorat"
+      ],
+      "note": "Projet professionnel en cours.",
+      "updated": "2026-09-16"
+    },
+    {
+      "id": "perdir",
+      "name": "PERDIR — Pilotage des absences",
+      "type": "project",
+      "category": "Professionnel",
+      "status": "active",
+      "priority": 2,
+      "progress": 84,
+      "energy": "medium",
+      "description": "Fiabilisation des workflows d’absences : absences fantômes, doublons, garde-fous et cohérence des automatismes.",
+      "next": "Finaliser le garde-fou métier demandé puis surveiller les prochaines exécutions.",
+      "link": "",
+      "tags": [
+        "Grist",
+        "workflow",
+        "n8n"
+      ],
+      "note": "Nettoyage des doublons validé.",
+      "updated": "2026-09-16"
+    },
+    {
+      "id": "ipackeps",
+      "name": "IPACKEPS",
+      "type": "project",
+      "category": "Professionnel",
+      "status": "published",
+      "priority": 4,
+      "progress": 100,
+      "energy": "low",
+      "description": "Correction de l’année SCONET et rétablissement de l’import élèves.",
+      "next": "Aucune action tant qu’aucune régression n’apparaît.",
+      "link": "",
+      "tags": [
+        "SCONET",
+        "maintenance"
+      ],
+      "note": "Correctif appliqué et import élèves fonctionnel.",
+      "updated": "2026-09-16"
+    },
+    {
+      "id": "appartement-47",
+      "name": "Appartement 47 / Maya",
+      "type": "idea",
+      "category": "Jeux",
+      "status": "idea",
+      "priority": 4,
+      "progress": 8,
+      "energy": "high",
+      "description": "Escape narratif autour d’un téléphone récupéré, plusieurs lieux et une vie numérique à explorer.",
+      "next": "Conserver le concept, ne pas lancer tant que Project_4 n’est pas terminé.",
+      "link": "",
+      "tags": [
+        "narratif",
+        "escape",
+        "mobile"
+      ],
+      "note": "Concept premium initialement visé autour de 90–120 min.",
+      "updated": "2026-09-14"
+    },
+    {
+      "id": "kaelis",
+      "name": "Kaelis",
+      "type": "idea",
+      "category": "Jeux",
+      "status": "idea",
+      "priority": 4,
+      "progress": 12,
+      "energy": "high",
+      "description": "Projet de jeu antérieur que tu souhaites terminer à terme.",
+      "next": "Documenter la proposition de valeur avant toute reprise.",
+      "link": "",
+      "tags": [
+        "jeu",
+        "backlog"
+      ],
+      "note": "À garder visible sans le laisser concurrencer le focus actuel.",
+      "updated": "2026-09-13"
+    },
+    {
+      "id": "slotboost",
+      "name": "SlotBoost",
+      "type": "idea",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 5,
+      "energy": "medium",
+      "description": "Anti-no-show et liste d’attente dynamique pour salons, paramédical, garages ou coaching.",
+      "next": "Tester uniquement si une fenêtre business s’ouvre après Loremi.",
+      "link": "",
+      "tags": [
+        "SaaS",
+        "planning",
+        "B2B"
+      ],
+      "note": "Idée plus ancienne ; pas de validation marché connue.",
+      "updated": "2025-08-08"
+    },
+    {
+      "id": "artizconnect",
+      "name": "ArtizConnect",
+      "type": "idea",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 3,
+      "energy": "medium",
+      "description": "Concept de mise en relation autour des artisans, conservé comme piste ancienne.",
+      "next": "Ne pas développer sans problème client précis et testable.",
+      "link": "",
+      "tags": [
+        "marketplace",
+        "artisans"
+      ],
+      "note": "Idée ancienne non prioritaire.",
+      "updated": "2025-08-08"
+    },
+    {
+      "id": "volcano-run",
+      "name": "Volcano Run",
+      "type": "idea",
+      "category": "Jeux",
+      "status": "archived",
+      "priority": 4,
+      "progress": 15,
+      "energy": "low",
+      "description": "Prototype de jeu simple envisagé sur un cycle très court.",
+      "next": "Aucune.",
+      "link": "",
+      "tags": [
+        "prototype",
+        "jeu"
+      ],
+      "note": "Mis de côté au profit de concepts plus différenciés.",
+      "updated": "2026-09-01"
+    },
+    {
+      "id": "ninja-fire-ice",
+      "name": "Ninja feu & chien glace",
+      "type": "idea",
+      "category": "Jeux",
+      "status": "archived",
+      "priority": 4,
+      "progress": 10,
+      "energy": "low",
+      "description": "Concept de jeu à deux personnages aux propriétés opposées.",
+      "next": "Aucune.",
+      "link": "",
+      "tags": [
+        "prototype",
+        "jeu"
+      ],
+      "note": "Abandonné.",
+      "updated": "2026-09-01"
+    },
+    {
+      "id": "marches-publics",
+      "name": "Service marchés publics",
+      "type": "project",
+      "category": "Business",
+      "status": "archived",
+      "priority": 4,
+      "progress": 20,
+      "energy": "low",
+      "description": "Service de qualification d’appels d’offres et aide à la réponse pour entreprises réunionnaises.",
+      "next": "Aucune.",
+      "link": "",
+      "tags": [
+        "B2B",
+        "marchés publics"
+      ],
+      "note": "Abandonné : effort/ROI jugé insuffisant face aux contraintes commerciales et économiques.",
+      "updated": "2026-09-15"
+    }
+  ]
+}
