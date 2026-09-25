@@ -29,8 +29,19 @@ function renderHome(){
  const activeWorlds=items().filter(x=>x.type==="universe"&&x.status!=="archived");
  const activeProjects=items().filter(x=>x.type==="project"&&activeish(x));
  const primary=activeProjects.sort((a,b)=>a.priority-b.priority||b.progress-a.progress)[0];
+ const maxActive=state.data.rules?.focus?.maxActiveUniverses||3;
+ const testable=items().filter(x=>x.type==="idea"&&x.challenge&&["test","keep"].includes(x.challenge.decision)&&x.status!=="archived").sort((a,b)=>b.challenge.score-a.challenge.score)[0];
+ let suggestion;
+ if(activeProjects.length>maxActive){
+   const candidate=activeProjects.slice().sort((a,b)=>(b.priority-a.priority)||((a.progress||0)-(b.progress||0)))[0];
+   suggestion={title:"N’ouvre rien de nouveau.",text:candidate?`Tu as ${activeProjects.length} projets ouverts. Le meilleur gain maintenant est de terminer, mettre en pause ou archiver « ${candidate.name} ».`:`Tu as ${activeProjects.length} projets ouverts. Réduis la charge avant d’en lancer un autre.`,id:candidate?.id};
+ }else if(testable){
+   suggestion={title:"Tu as de la capacité.",text:`La meilleure idée encore non engagée est « ${testable.name} » (${testable.challenge.score}/100). Fais uniquement un test léger, pas un produit complet.`,id:testable.id};
+ }else{
+   suggestion={title:"Rien à ajouter.",text:"Continue le projet principal. Le système n’a aucune raison valable de te distraire aujourd’hui.",id:null};
+ }
  $("#hero").className="hero";
- $("#hero").innerHTML=`<div><small>Focus système</small><h2>${primary?esc(primary.name):"Aucun projet principal"}</h2><p>${primary?esc(primary.next||primary.description):"Choisis volontairement ce qui mérite ton énergie."}</p><div class="hero-actions">${primary?`<button class="action strong" data-open="${esc(primary.id)}">Ouvrir</button>`:""}<button class="action" data-go="decisions">Voir les idées challengées</button></div></div><div class="hero-focus"><div class="metric">${activeProjects.length}</div><div class="metric-label">projets réellement ouverts</div><div class="progress"><i style="width:${Math.min(100,activeProjects.length*18)}%"></i></div></div>`;
+ $("#hero").innerHTML=`<div><small>Focus système</small><h2>${primary?esc(primary.name):"Aucun projet principal"}</h2><p>${primary?esc(primary.next||primary.description):"Choisis volontairement ce qui mérite ton énergie."}</p><div class="hero-actions">${primary?`<button class="action strong" data-open="${esc(primary.id)}">Ouvrir</button>`:""}<button class="action" data-go="decisions">Voir les idées challengées</button>${suggestion.id?`<button class="action" data-open="${esc(suggestion.id)}">Suggestion du cerveau</button>`:""}</div><div class="challenge"><strong>${esc(suggestion.title)}</strong><p>${esc(suggestion.text)}</p></div></div><div class="hero-focus"><div class="metric">${activeProjects.length}</div><div class="metric-label">projets réellement ouverts</div><div class="progress"><i style="width:${Math.min(100,activeProjects.length*18)}%"></i></div></div>`;
  $("#homeWorlds").innerHTML=activeWorlds.map(worldCard).join("")||'<div class="empty">Aucun univers.</div>';
  const challenged=items().filter(x=>x.challenge&&x.status!=="archived").sort((a,b)=>b.challenge.score-a.challenge.score).slice(0,5);
  $("#decisionPreview").innerHTML=`<div class="mini-list">${challenged.map(x=>miniRow(x,`${x.challenge.score}/100`)).join("")}</div>`;
@@ -116,6 +127,12 @@ async function importData(file){try{const d=JSON.parse(await file.text());if(!Ar
 let tt;function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("show"),1800)}
 $("#nav").onclick=e=>{const b=e.target.closest("[data-view]");if(b)switchView(b.dataset.view)};
 $("#addBtn").onclick=()=>openEdit();$("#searchBtn").onclick=search;$("#closeSearch").onclick=()=>$("#searchDialog").close();$("#searchInput").oninput=e=>renderSearch(e.target.value);
+$("#itemStatus").onchange=e=>{
+ const s=e.target.value;
+ if(s==="completed"||s==="published"){$("#itemProgress").value=100;$("#itemEnergy").value="low"}
+ if(s==="archived"){$("#itemPriority").value="4";$("#itemEnergy").value="low"}
+ if(s==="idea"){$("#itemPriority").value="4";$("#itemProgress").value=Math.min(20,+$("#itemProgress").value||0)}
+};
 $("#closeEdit").onclick=()=>$("#editDialog").close();$("#cancelEdit").onclick=()=>$("#editDialog").close();$("#editForm").onsubmit=saveEdit;$("#deleteBtn").onclick=removeSelected;$("#exportBtn").onclick=exportData;$("#importInput").onchange=e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value=""};
 document.addEventListener("keydown",e=>{if(e.key==="/"&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)){e.preventDefault();search()}});
 load();
