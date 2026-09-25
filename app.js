@@ -1,322 +1,121 @@
-const STORAGE_KEY = "second-brain-loic-v1";
-const state = { data:null, view:"dashboard", projectFilter:"Tous", editingId:null };
-
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-const statusLabel = {
-  active:"Actif", production:"Production", validation:"À valider", paused:"Pause",
-  idea:"Idée", archived:"Archivé", published:"Publié"
-};
-const statusColor = {
-  active:"#53d68a", production:"#8f7cff", validation:"#f0b65c", paused:"#7d8798",
-  idea:"#65a7ff", archived:"#555d6b", published:"#53d68a"
-};
-const categoryIcon = {Jeux:"✦",Business:"↗",Produit:"◇",Professionnel:"⌘",Écriture:"✎",Personnel:"◌",Autre:"·"};
-const priorityLabel = {1:"P1",2:"P2",3:"P3",4:"P4"};
-const itemColor = item => statusColor[item.status] || "#8f7cff";
-
-async function loadData(){
-  let serverData = null;
-  try{
-    const api = await fetch("/api/brain", {cache:"no-store"});
-    const type = api.headers.get("content-type") || "";
-    if(api.ok && type.includes("application/json")) serverData = await api.json();
-  }catch{}
-
-  if(serverData && Array.isArray(serverData.items)){
-    state.data = serverData;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(serverData));
-    renderAll();
-    return;
-  }
-
-  let seed = null;
-  try{
-    const r = await fetch("data/brain.json", {cache:"no-store"});
-    if(!r.ok) throw new Error("seed unavailable");
-    seed = await r.json();
-  }catch{
-    seed = {meta:{owner:"Loïc",version:1},items:[]};
-  }
-  try{
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    state.data = saved && Array.isArray(saved.items) ? saved : seed;
-  }catch{
-    state.data = seed;
-  }
-  renderAll();
+const STORAGE_KEY="second-brain-loic-v2";
+const state={data:null,view:"home",selected:null};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+const labels={active:"Actif",production:"Production",validation:"À valider",paused:"Pause",idea:"Idée",published:"Publié",completed:"Terminé",archived:"Archivé"};
+const icons={Jeux:"✦",Business:"↗",Produit:"◇",Écriture:"✎",Personnel:"◌",Autre:"·"};
+const statusDot={active:"#2f9f71",production:"#6c5ce7",validation:"#b97818",paused:"#a1a4aa",idea:"#3f7edb",published:"#2f9f71",completed:"#2f9f71",archived:"#a1a4aa"};
+async function load(){
+ let remote=null;
+ try{const r=await fetch("/api/brain",{cache:"no-store"});if(r.ok&&(r.headers.get("content-type")||"").includes("json"))remote=await r.json()}catch{}
+ if(!remote){try{const r=await fetch("data/brain.json",{cache:"no-store"});remote=await r.json()}catch{remote={meta:{owner:"Loïc NEBONNE"},items:[]}}}
+ try{const local=JSON.parse(localStorage.getItem(STORAGE_KEY));state.data=local?.items?local:remote}catch{state.data=remote}
+ render();
 }
-
-async function persist(message="Modifications enregistrées"){
-  state.data.meta.updated = new Date().toISOString().slice(0,10);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
-  renderAll();
-  try{
-    const r = await fetch("/api/brain", {
-      method:"PUT",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(state.data)
-    });
-    const type = r.headers.get("content-type") || "";
-    if(r.ok && type.includes("application/json")){
-      toast(message + " · JSON synchronisé");
-      return;
-    }
-  }catch{}
-  toast(message + " · sauvegarde navigateur");
+async function persist(msg="Enregistré"){
+ state.data.meta.updated=new Date().toISOString().slice(0,10);
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(state.data));render();
+ try{const r=await fetch("/api/brain",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(state.data)});if(r.ok)return toast(msg+" · JSON synchronisé")}catch{}
+ toast(msg+" · sauvegarde navigateur");
 }
-
-function items(){ return state.data?.items || []; }
-function visibleProjects(){ return items().filter(x => x.type==="project" && x.status!=="archived"); }
-function ideas(){ return items().filter(x => x.type==="idea" && x.status!=="archived"); }
-function archives(){ return items().filter(x => x.status==="archived"); }
-function byPriority(a,b){ return (+a.priority - +b.priority) || (+b.progress - +a.progress); }
-
-function renderAll(){
-  $("#navProjectCount").textContent = visibleProjects().length;
-  $("#navIdeaCount").textContent = ideas().length;
-  renderDashboard();
-  renderProjects();
-  renderIdeas();
-  renderFocus();
-  renderArchive();
+const items=()=>state.data.items||[];
+const roots=()=>items().filter(x=>x.type==="universe" || (!x.parentId&&x.type==="project"&&x.status!=="archived"));
+const children=id=>items().filter(x=>x.parentId===id);
+const ideas=()=>items().filter(x=>x.type==="idea"&&x.status!=="archived");
+const archives=()=>items().filter(x=>x.status==="archived");
+const activeish=x=>["active","production","validation"].includes(x.status);
+function render(){renderHome();renderWorlds();renderIdeas();renderDecisions();renderArchive()}
+function renderHome(){
+ const activeWorlds=items().filter(x=>x.type==="universe"&&x.status!=="archived");
+ const activeProjects=items().filter(x=>x.type==="project"&&activeish(x));
+ const primary=activeProjects.sort((a,b)=>a.priority-b.priority||b.progress-a.progress)[0];
+ $("#hero").className="hero";
+ $("#hero").innerHTML=`<div><small>Focus système</small><h2>${primary?esc(primary.name):"Aucun projet principal"}</h2><p>${primary?esc(primary.next||primary.description):"Choisis volontairement ce qui mérite ton énergie."}</p><div class="hero-actions">${primary?`<button class="action strong" data-open="${esc(primary.id)}">Ouvrir</button>`:""}<button class="action" data-go="decisions">Voir les idées challengées</button></div></div><div class="hero-focus"><div class="metric">${activeProjects.length}</div><div class="metric-label">projets réellement ouverts</div><div class="progress"><i style="width:${Math.min(100,activeProjects.length*18)}%"></i></div></div>`;
+ $("#homeWorlds").innerHTML=activeWorlds.map(worldCard).join("")||'<div class="empty">Aucun univers.</div>';
+ const challenged=items().filter(x=>x.challenge&&x.status!=="archived").sort((a,b)=>b.challenge.score-a.challenge.score).slice(0,5);
+ $("#decisionPreview").innerHTML=`<div class="mini-list">${challenged.map(x=>miniRow(x,`${x.challenge.score}/100`)).join("")}</div>`;
+ $("#ideaPreview").innerHTML=`<div class="mini-list">${ideas().slice(0,5).map(x=>miniRow(x,x.category)).join("")}</div>`;
+ bind();
 }
-
-function renderDashboard(){
-  const candidates = visibleProjects().filter(x => [1,2].includes(+x.priority) && ["active","production","validation"].includes(x.status)).sort(byPriority);
-  const focus = candidates[0] || visibleProjects().sort(byPriority)[0];
-  $("#mainFocus").innerHTML = focus ? `
-    <div class="focus-main">
-      <div>
-        <span class="status" style="border-color:${itemColor(focus)}55;color:${itemColor(focus)}">● ${esc(statusLabel[focus.status])} · ${esc(focus.category)}</span>
-        <h2>${esc(focus.name)}</h2>
-        <p>${esc(focus.description)}</p>
-        <div class="focus-meta">
-          <span class="pill"><strong>${priorityLabel[focus.priority]}</strong> priorité</span>
-          <span class="pill"><strong>${focus.energy === "high" ? "Forte" : focus.energy === "medium" ? "Moyenne" : "Faible"}</strong> énergie</span>
-          ${focus.link ? `<a class="pill project-link" href="${esc(focus.link)}" target="_blank" rel="noreferrer">Ouvrir ↗</a>` : ""}
-        </div>
-      </div>
-      <div class="ring" style="--p:${Math.max(0,Math.min(100,+focus.progress||0))}"><span>${+focus.progress||0}%</span></div>
-    </div>
-    <div class="focus-next"><b>Prochaine action</b><span>${esc(focus.next || "Définir la prochaine action.")}</span></div>
-  ` : '<div class="empty">Aucun projet actif.</div>';
-
-  const active = visibleProjects().filter(x => ["active","production","validation"].includes(x.status));
-  const heavy = visibleProjects().filter(x => x.energy==="high" && !["published","paused"].includes(x.status)).length;
-  const overloaded = active.length > 4 || heavy > 2;
-  $("#signalScore").textContent = overloaded ? "Attention" : "Stable";
-  $("#brainSignal").innerHTML = `
-    <div class="signal-copy">
-      <h3>${overloaded ? "Trop de fronts ouverts." : "Charge sous contrôle."}</h3>
-      <p>${overloaded
-        ? `Tu as ${active.length} projets qui réclament une décision ou de l'exécution. Le risque principal n'est pas le manque d'idées, mais la dilution.`
-        : `Tu as ${active.length} fronts réellement ouverts. Garde cette limite et transforme les nouvelles idées en options, pas en obligations.`}</p>
-    </div>
-    <div class="signal-rule"><span>◎</span><div><strong>Règle de passage</strong><small>Une nouvelle production doit remplacer explicitement un projet actif.</small></div></div>
-  `;
-
-  $("#activeProjects").innerHTML = visibleProjects().sort(byPriority).slice(0,6).map(projectCard).join("") || '<div class="empty">Aucun projet.</div>';
-  $("#radarIdeas").innerHTML = ideas().sort(byPriority).slice(0,5).map((x,i)=>`
-    <article class="radar-item" data-id="${esc(x.id)}">
-      <span class="radar-num">0${i+1}</span><div><strong>${esc(x.name)}</strong><p>${esc(x.next || x.description)}</p></div><span class="tag">${esc(x.category)}</span>
-    </article>`).join("") || '<div class="empty">Aucune idée en attente.</div>';
-
-  const cats = {};
-  visibleProjects().filter(x=>x.status!=="published").forEach(x=>cats[x.category]=(cats[x.category]||0)+1);
-  const total = Object.values(cats).reduce((a,b)=>a+b,0)||1;
-  const series = ["#8f7cff","#53d68a","#65a7ff","#f0b65c","#ef6b73","#8b92a1"];
-  $("#allocation").innerHTML = Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([cat,n],i)=>`
-    <div class="alloc-row"><div class="alloc-label"><span>${esc(cat)}</span><strong>${n}</strong></div>
-    <div class="alloc-bar"><i style="width:${(n/total)*100}%;background:${series[i%series.length]}"></i></div></div>
-  `).join("") + `<div class="alloc-note">Répartition par nombre de projets ouverts, pas par heures passées. Le but est de rendre visible la dispersion.</div>`;
-  bindCards();
+function worldCard(x){
+ const c=children(x.id), done=c.filter(i=>["published","completed"].includes(i.status)).length;
+ const active=c.filter(activeish).length;
+ return `<article class="world-card" data-open="${esc(x.id)}"><div class="world-top"><div class="world-icon">${icons[x.category]||"·"}</div><span class="status">${esc(labels[x.status]||x.status)}</span></div><h3>${esc(x.name)}</h3><p>${esc(x.description)}</p><div class="progress"><i style="width:${+x.progress||0}%"></i></div><div class="world-stats"><div><strong>${c.length}</strong><span>éléments</span></div><div><strong>${active}</strong><span>ouverts</span></div><div><strong>${done}</strong><span>terminés</span></div></div></article>`;
 }
-
-function projectCard(x){
-  return `<article class="project-card" data-id="${esc(x.id)}" style="--card-color:${itemColor(x)}">
-    <div class="project-top"><div class="project-icon">${categoryIcon[x.category]||"·"}</div><span class="priority p${x.priority}">${priorityLabel[x.priority]||"P4"}</span></div>
-    <h3>${esc(x.name)}</h3><p>${esc(x.description)}</p>
-    <div class="progress-row"><span>${esc(statusLabel[x.status]||x.status)}</span><strong>${+x.progress||0}%</strong></div>
-    <div class="progress"><i style="width:${Math.max(0,Math.min(100,+x.progress||0))}%"></i></div>
-    <div class="project-footer"><small>${esc(x.next||"Prochaine action à définir")}</small>${x.link ? `<a class="project-link" href="${esc(x.link)}" target="_blank" rel="noreferrer" data-stop>↗</a>`:""}</div>
-  </article>`;
+function miniRow(x,right){
+ return `<div class="mini-row" data-open="${esc(x.id)}"><span class="dot" style="background:${statusDot[x.status]||"#aaa"}"></span><div><strong>${esc(x.name)}</strong><small>${esc(labels[x.status]||x.status)} · ${esc(x.category)}</small></div><em>${esc(right)}</em></div>`;
 }
-
-function renderProjects(){
-  const cats = ["Tous", ...new Set(visibleProjects().map(x=>x.category))];
-  $("#projectFilters").innerHTML = cats.map(c=>`<button class="chip ${state.projectFilter===c?"active":""}" data-filter="${esc(c)}">${esc(c)}</button>`).join("");
-  let list = visibleProjects().filter(x=>state.projectFilter==="Tous" || x.category===state.projectFilter);
-  const sort = $("#sortProjects").value;
-  if(sort==="priority") list.sort(byPriority);
-  if(sort==="updated") list.sort((a,b)=>String(b.updated).localeCompare(String(a.updated)));
-  if(sort==="name") list.sort((a,b)=>a.name.localeCompare(b.name,"fr"));
-  $("#allProjects").innerHTML = list.map(projectCard).join("") || '<div class="empty">Aucun projet dans cette vue.</div>';
-  $$("#projectFilters .chip").forEach(b=>b.addEventListener("click",()=>{state.projectFilter=b.dataset.filter;renderProjects()}));
-  bindCards();
+function renderWorlds(){
+ const list=roots().filter(x=>x.status!=="archived").sort((a,b)=>a.priority-b.priority);
+ $("#worldsList").innerHTML=list.map(x=>{
+   const c=children(x.id).sort((a,b)=>a.priority-b.priority||a.name.localeCompare(b.name,"fr"));
+   return `<section class="world-section open"><div class="world-summary" data-toggle><div class="world-icon">${icons[x.category]||"·"}</div><div><h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><span class="status">${c.length} élément${c.length>1?"s":""} · ${labels[x.status]||x.status}</span><span class="chev">›</span></div><div class="children">${c.length?c.map(childCard).join(""):'<div class="empty">Aucun sous-projet.</div>'}</div></section>`;
+ }).join("")||'<div class="empty">Aucun univers.</div>';
+ $$("[data-toggle]").forEach(el=>el.onclick=()=>el.closest(".world-section").classList.toggle("open"));bind();
 }
-
+function childCard(x){
+ return `<article class="child-card" data-open="${esc(x.id)}"><div><h4>${esc(x.name)}</h4><p>${esc(x.next||x.description)}</p></div><div class="child-meta"><span class="status">${esc(labels[x.status]||x.status)}</span><span class="status">P${x.priority}</span><span class="status">${+x.progress||0}%</span></div></article>`;
+}
 function renderIdeas(){
-  const list = ideas().sort(byPriority);
-  $("#ideaCount").textContent = list.length;
-  $("#ideasList").innerHTML = list.map(x=>`
-    <article class="idea-card" data-id="${esc(x.id)}">
-      <div class="idea-symbol">${categoryIcon[x.category]||"✦"}</div>
-      <div><h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div>
-      <div class="idea-rank"><strong>${priorityLabel[x.priority]||"P4"}</strong><small>${esc(x.category)}</small></div>
-    </article>`).join("") || '<div class="empty">Incubateur vide. Profite-en.</div>';
-  bindCards();
+ const list=ideas().sort((a,b)=>(b.challenge?.score||0)-(a.challenge?.score||0));
+ const challenged=list.filter(x=>x.challenge).length;
+ $("#ideaStats").innerHTML=`<strong>${list.length}</strong> idées · ${challenged} challengées`;
+ $("#ideasList").innerHTML=list.map(x=>`<article class="idea-card" data-open="${esc(x.id)}"><div class="idea-icon">${icons[x.category]||"✦"}</div><div><h3>${esc(x.name)}</h3><p>${esc(x.description)}</p></div><div class="score">${x.challenge?x.challenge.score:"—"}</div></article>`).join("")||'<div class="empty">Aucune idée.</div>';bind();
 }
-
-function renderFocus(){
-  const p1 = visibleProjects().filter(x=>+x.priority===1 && !["published","paused"].includes(x.status)).sort(byPriority);
-  const p2 = visibleProjects().filter(x=>+x.priority===2 && !["published","paused"].includes(x.status)).sort(byPriority);
-  $("#focusBoard").className="focus-board";
-  $("#focusBoard").innerHTML = `
-    <section class="focus-lane"><span class="section-kicker">P1 · Maintenant</span><h2>Maximum 1–2 résultats à pousser</h2>
-      ${p1.length?p1.map(focusTask).join(""):'<div class="empty">Aucun P1.</div>'}
-    </section>
-    <section class="focus-lane"><span class="section-kicker">P2 · Ensuite</span><h2>Important, mais ne doit pas voler le focus</h2>
-      ${p2.length?p2.map(focusTask).join(""):'<div class="empty">Aucun P2.</div>'}
-    </section>`;
-  bindCards();
+function renderDecisions(){
+ const list=items().filter(x=>x.challenge).sort((a,b)=>b.challenge.score-a.challenge.score);
+ $("#decisionLab").innerHTML=`<div class="decision-board">${list.map(x=>`<article class="decision-row" data-open="${esc(x.id)}"><div class="decision-score">${x.challenge.score}</div><div><h3>${esc(x.name)}</h3><p>${esc(x.challenge.reason)}</p></div><span class="verdict v-${esc(x.challenge.decision)}">${verdictLabel(x.challenge.decision)}</span></article>`).join("")}</div>`;bind();
 }
-function focusTask(x){ return `<article class="focus-task" data-id="${esc(x.id)}"><strong>${esc(x.name)}</strong><p>→ ${esc(x.next||"Définir la prochaine action")}</p></article>`; }
-
+function verdictLabel(v){return({keep:"À garder",test:"À tester",incubate:"Incuber",archive:"À archiver",merge:"Fusionner"}[v]||v)}
 function renderArchive(){
-  $("#archiveList").innerHTML = archives().sort((a,b)=>String(b.updated).localeCompare(String(a.updated))).map(x=>`
-    <article class="archive-row" data-id="${esc(x.id)}"><div><strong>${esc(x.name)}</strong><p>${esc(x.category)}</p></div><p>${esc(x.note||x.description)}</p><time>${esc(x.updated||"")}</time></article>
-  `).join("") || '<div class="empty">Aucune archive.</div>';
-  bindCards();
+ $("#archiveList").innerHTML=archives().sort((a,b)=>String(b.updated).localeCompare(String(a.updated))).map(x=>`<article class="archive-row" data-open="${esc(x.id)}"><div><strong>${esc(x.name)}</strong><p>${esc(x.category)}</p></div><p>${esc(x.note||x.description)}</p><time>${esc(x.updated||"")}</time></article>`).join("")||'<div class="empty">Aucune archive.</div>';bind();
 }
-
-function bindCards(){
-  $$("[data-id]").forEach(el=>{ el.onclick = e => {
-    if(e.target.closest("[data-stop]")) return;
-    openEditor(el.dataset.id);
-  }});
+function bind(){
+ $$("[data-open]").forEach(el=>el.onclick=e=>{e.stopPropagation();openDetail(el.dataset.open)});
+ $$("[data-go]").forEach(el=>el.onclick=()=>switchView(el.dataset.go));
 }
-
-function switchView(view){
-  state.view=view;
-  $$(".view").forEach(v=>v.classList.remove("active"));
-  $("#"+view+"View")?.classList.add("active");
-  $$(".nav-item").forEach(b=>b.classList.toggle("active", b.dataset.view===view));
-  const titles={dashboard:"Bonjour Loïc.",projects:"Tes projets.",ideas:"Incubateur.",focus:"Le vrai focus.",archive:"Archives."};
-  const kickers={dashboard:"Vendredi 25 septembre 2026",projects:"Portefeuille vivant",ideas:"Capturer sans s'éparpiller",focus:"Décider où va l'énergie",archive:"Décisions assumées"};
-  $("#pageTitle").textContent=titles[view]||"Second Brain";
-  $("#eyebrow").textContent=kickers[view]||"Second Brain";
-  window.scrollTo({top:0,behavior:"smooth"});
+function openDetail(id){
+ const x=items().find(i=>i.id===id);if(!x)return;state.selected=id;
+ const parent=x.parentId?items().find(i=>i.id===x.parentId):null;
+ const kids=children(x.id);
+ $("#detailContent").innerHTML=`<div class="detail"><div class="dialog-head"><div><small>${esc(x.type)} · ${esc(x.category)}</small><h2>${esc(x.name)}</h2></div><button class="round" data-close>×</button></div><p class="detail-desc">${esc(x.description)}</p><div class="detail-actions">${!["completed","published"].includes(x.status)?'<button class="quick q-complete" data-transition="complete">✓ Terminer</button>':""}${x.status!=="archived"?'<button class="quick q-archive" data-transition="archive">Archiver</button>':""}${x.status!=="paused"&&x.status!=="archived"?'<button class="quick q-pause" data-transition="pause">Pause</button>':""}${!activeish(x)&&x.status!=="archived"?'<button class="quick q-active" data-transition="activate">Réactiver</button>':""}<button class="quick q-edit" data-edit>Modifier</button></div><div class="detail-grid"><div class="detail-box"><small>État</small><strong>${esc(labels[x.status]||x.status)}</strong></div><div class="detail-box"><small>Progression</small><strong>${+x.progress||0}%</strong></div><div class="detail-box"><small>Priorité</small><strong>P${x.priority}</strong></div><div class="detail-box"><small>Dossier</small><span>${parent?esc(parent.name):"Racine"}</span></div><div class="detail-box"><small>Prochaine action</small><span>${esc(x.next||"—")}</span></div><div class="detail-box"><small>Sous-éléments</small><strong>${kids.length}</strong></div></div>${x.challenge?`<div class="challenge"><strong>${x.challenge.score}/100 · ${verdictLabel(x.challenge.decision)}</strong><p>${esc(x.challenge.reason)}</p></div>`:""}${x.note?`<div class="challenge"><strong>Contexte</strong><p>${esc(x.note)}</p></div>`:""}</div>`;
+ $("#detailDialog").showModal();
+ $("[data-close]").onclick=()=>$("#detailDialog").close();
+ $$("[data-transition]").forEach(b=>b.onclick=()=>transition(id,b.dataset.transition));
+ $("[data-edit]").onclick=()=>{$("#detailDialog").close();openEdit(id)};
 }
-
-function openEditor(id=null){
-  state.editingId=id;
-  const x = id ? items().find(i=>i.id===id) : null;
-  $("#dialogKicker").textContent=x?"Modifier":"Nouvel élément";
-  $("#dialogTitle").textContent=x?x.name:"Capture rapide";
-  $("#itemId").value=x?.id||"";
-  $("#itemName").value=x?.name||"";
-  $("#itemType").value=x?.type||"idea";
-  $("#itemCategory").value=x?.category||"Autre";
-  $("#itemStatus").value=x?.status||"idea";
-  $("#itemPriority").value=String(x?.priority||4);
-  $("#itemDescription").value=x?.description||"";
-  $("#itemNext").value=x?.next||"";
-  $("#itemProgress").value=x?.progress??0;
-  $("#itemEnergy").value=x?.energy||"medium";
-  $("#itemLink").value=x?.link||"";
-  $("#itemTags").value=(x?.tags||[]).join(", ");
-  $("#itemNote").value=x?.note||"";
-  $("#deleteBtn").style.visibility=x?"visible":"hidden";
-  $("#itemDialog").showModal();
-  setTimeout(()=>$("#itemName").focus(),30);
+function transition(id,action){
+ const x=items().find(i=>i.id===id);if(!x)return;
+ if(action==="complete"){x.status="completed";x.progress=100;x.energy="low";x.next="Aucune action : terminé."}
+ if(action==="archive"){x.status="archived";x.priority=4;x.energy="low";x.next="Aucune action : archivé."}
+ if(action==="pause"){x.status="paused"}
+ if(action==="activate"){x.status="active";x.progress=Math.max(1,+x.progress||0);x.priority=Math.min(+x.priority||3,2)}
+ x.updated=new Date().toISOString().slice(0,10);$("#detailDialog").close();persist("État mis à jour automatiquement");
 }
-
-function slugify(v){
-  return v.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,48) || "item";
+function openEdit(id=null){
+ state.selected=id;const x=id?items().find(i=>i.id===id):null;
+ $("#editKicker").textContent=x?"Modifier":"Capturer";$("#editTitle").textContent=x?x.name:"Nouvel élément";
+ $("#itemId").value=x?.id||"";$("#itemName").value=x?.name||"";$("#itemType").value=x?.type||"idea";$("#itemCategory").value=x?.category||"Autre";$("#itemStatus").value=x?.status||"idea";$("#itemPriority").value=String(x?.priority||4);$("#itemDescription").value=x?.description||"";$("#itemNext").value=x?.next||"";$("#itemProgress").value=x?.progress??0;$("#itemEnergy").value=x?.energy||"medium";$("#itemLink").value=x?.link||"";$("#itemTags").value=(x?.tags||[]).join(", ");$("#itemNote").value=x?.note||"";$("#deleteBtn").style.visibility=x?"visible":"hidden";$("#editDialog").showModal();
 }
-function saveForm(){
-  const name=$("#itemName").value.trim();
-  if(!name){ $("#itemName").focus(); return; }
-  const existing=state.editingId?items().find(x=>x.id===state.editingId):null;
-  let id=existing?.id || slugify(name);
-  if(!existing){
-    let base=id,n=2;
-    while(items().some(x=>x.id===id)) id=`${base}-${n++}`;
-  }
-  const item={
-    id,name,type:$("#itemType").value,category:$("#itemCategory").value,status:$("#itemStatus").value,
-    priority:+$("#itemPriority").value,description:$("#itemDescription").value.trim(),
-    next:$("#itemNext").value.trim(),progress:Math.max(0,Math.min(100,+$("#itemProgress").value||0)),
-    energy:$("#itemEnergy").value,link:$("#itemLink").value.trim(),
-    tags:$("#itemTags").value.split(",").map(x=>x.trim()).filter(Boolean),
-    note:$("#itemNote").value.trim(),updated:new Date().toISOString().slice(0,10)
-  };
-  if(existing) Object.assign(existing,item); else state.data.items.unshift(item);
-  $("#itemDialog").close();
-  state.editingId=null;
-  persist(existing?"Élément mis à jour":"Idée capturée");
+function slug(v){return v.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,48)||"item"}
+function saveEdit(e){
+ e.preventDefault();const name=$("#itemName").value.trim();if(!name)return;
+ let x=state.selected?items().find(i=>i.id===state.selected):null;
+ if(!x){let id=slug(name),base=id,n=2;while(items().some(i=>i.id===id))id=`${base}-${n++}`;x={id};state.data.items.unshift(x)}
+ Object.assign(x,{name,type:$("#itemType").value,category:$("#itemCategory").value,status:$("#itemStatus").value,priority:+$("#itemPriority").value,description:$("#itemDescription").value.trim(),next:$("#itemNext").value.trim(),progress:Math.max(0,Math.min(100,+$("#itemProgress").value||0)),energy:$("#itemEnergy").value,link:$("#itemLink").value.trim(),tags:$("#itemTags").value.split(",").map(v=>v.trim()).filter(Boolean),note:$("#itemNote").value.trim(),updated:new Date().toISOString().slice(0,10)});
+ $("#editDialog").close();state.selected=null;persist("Élément enregistré");
 }
-
-function deleteCurrent(){
-  if(!state.editingId) return;
-  const x=items().find(i=>i.id===state.editingId);
-  if(!x || !confirm(`Supprimer “${x.name}” ?`)) return;
-  state.data.items=items().filter(i=>i.id!==state.editingId);
-  $("#itemDialog").close(); state.editingId=null; persist("Élément supprimé");
+function removeSelected(){if(!state.selected)return;const x=items().find(i=>i.id===state.selected);if(!x||!confirm(`Supprimer “${x.name}” ?`))return;state.data.items=items().filter(i=>i.id!==state.selected);$("#editDialog").close();state.selected=null;persist("Élément supprimé")}
+function switchView(v){state.view=v;$$(".view").forEach(x=>x.classList.remove("active"));$("#"+v+"View").classList.add("active");$$(".nav").forEach(x=>x.classList.toggle("active",x.dataset.view===v));const t={home:"Ton cerveau, sans le bruit.",worlds:"Tes univers.",ideas:"L’incubateur.",decisions:"Décider avant de construire.",archive:"La mémoire utile."};$("#pageTitle").textContent=t[v];window.scrollTo({top:0,behavior:"smooth"})}
+function search(){
+ $("#searchDialog").showModal();$("#searchInput").value="";renderSearch("");setTimeout(()=>$("#searchInput").focus(),20)
 }
-
-function exportData(){
-  const blob=new Blob([JSON.stringify(state.data,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob),a=document.createElement("a");
-  a.href=url;a.download=`second-brain-${new Date().toISOString().slice(0,10)}.json`;a.click();
-  setTimeout(()=>URL.revokeObjectURL(url),1000); toast("Export JSON créé");
-}
-async function importData(file){
-  try{
-    const data=JSON.parse(await file.text());
-    if(!data || !Array.isArray(data.items)) throw new Error();
-    state.data=data;persist("Données importées");
-  }catch{ toast("JSON invalide"); }
-}
-
-function openSearch(){
-  $("#searchDialog").showModal();
-  $("#searchInput").value="";
-  renderSearch("");
-  setTimeout(()=>$("#searchInput").focus(),30);
-}
-function renderSearch(q){
-  const needle=q.trim().toLowerCase();
-  const list=items().filter(x=>!needle || [x.name,x.description,x.category,x.status,...(x.tags||[])].join(" ").toLowerCase().includes(needle)).slice(0,12);
-  $("#searchResults").innerHTML=list.map(x=>`<div class="search-result" data-search-id="${esc(x.id)}"><strong>${esc(x.name)}</strong><span>${esc(x.category)} · ${esc(statusLabel[x.status]||x.status)}</span></div>`).join("") || '<div class="empty">Aucun résultat.</div>';
-  $$("[data-search-id]").forEach(el=>el.onclick=()=>{$("#searchDialog").close();openEditor(el.dataset.searchId)});
-}
-let toastTimer;
-function toast(msg){
-  const el=$("#toast");el.textContent=msg;el.classList.add("show");clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove("show"),1800);
-}
-
-$("#nav").addEventListener("click",e=>{const b=e.target.closest("[data-view]");if(b)switchView(b.dataset.view)});
-$$("[data-go]").forEach(b=>b.addEventListener("click",()=>switchView(b.dataset.go)));
-$("#addBtn").addEventListener("click",()=>openEditor());
-$("#closeDialog").addEventListener("click",()=>$("#itemDialog").close());
-$("#cancelBtn").addEventListener("click",()=>$("#itemDialog").close());
-$("#deleteBtn").addEventListener("click",deleteCurrent);
-$("#itemForm").addEventListener("submit",e=>{e.preventDefault();saveForm()});
-$("#exportBtn").addEventListener("click",exportData);
-$("#importInput").addEventListener("change",e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value=""});
-$("#sortProjects").addEventListener("change",renderProjects);
-$("#commandBtn").addEventListener("click",openSearch);
-$("#closeSearch").addEventListener("click",()=>$("#searchDialog").close());
-$("#searchInput").addEventListener("input",e=>renderSearch(e.target.value));
-document.addEventListener("keydown",e=>{
-  if(e.key==="/" && !["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)){
-    e.preventDefault();openSearch();
-  }
-  if(e.key==="Escape"){$("#itemDialog").open&&$("#itemDialog").close();$("#searchDialog").open&&$("#searchDialog").close()}
-});
-
-loadData();
+function renderSearch(q){const n=q.toLowerCase().trim();const l=items().filter(x=>!n||[x.name,x.description,x.category,...(x.tags||[])].join(" ").toLowerCase().includes(n)).slice(0,14);$("#searchResults").innerHTML=l.map(x=>`<div class="result" data-result="${esc(x.id)}"><strong>${esc(x.name)}</strong><span>${esc(x.category)} · ${esc(labels[x.status]||x.status)}</span></div>`).join("")||'<div class="empty">Aucun résultat.</div>';$$("[data-result]").forEach(el=>el.onclick=()=>{$("#searchDialog").close();openDetail(el.dataset.result)})}
+function exportData(){const blob=new Blob([JSON.stringify(state.data,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="second-brain-"+new Date().toISOString().slice(0,10)+".json";a.click();setTimeout(()=>URL.revokeObjectURL(url),500)}
+async function importData(file){try{const d=JSON.parse(await file.text());if(!Array.isArray(d.items))throw 0;state.data=d;persist("Import réussi")}catch{toast("JSON invalide")}}
+let tt;function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("show"),1800)}
+$("#nav").onclick=e=>{const b=e.target.closest("[data-view]");if(b)switchView(b.dataset.view)};
+$("#addBtn").onclick=()=>openEdit();$("#searchBtn").onclick=search;$("#closeSearch").onclick=()=>$("#searchDialog").close();$("#searchInput").oninput=e=>renderSearch(e.target.value);
+$("#closeEdit").onclick=()=>$("#editDialog").close();$("#cancelEdit").onclick=()=>$("#editDialog").close();$("#editForm").onsubmit=saveEdit;$("#deleteBtn").onclick=removeSelected;$("#exportBtn").onclick=exportData;$("#importInput").onchange=e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value=""};
+document.addEventListener("keydown",e=>{if(e.key==="/"&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)){e.preventDefault();search()}});
+load();
