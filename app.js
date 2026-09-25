@@ -17,12 +17,26 @@ const priorityLabel = {1:"P1",2:"P2",3:"P3",4:"P4"};
 const itemColor = item => statusColor[item.status] || "#8f7cff";
 
 async function loadData(){
+  let serverData = null;
+  try{
+    const api = await fetch("/api/brain", {cache:"no-store"});
+    const type = api.headers.get("content-type") || "";
+    if(api.ok && type.includes("application/json")) serverData = await api.json();
+  }catch{}
+
+  if(serverData && Array.isArray(serverData.items)){
+    state.data = serverData;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(serverData));
+    renderAll();
+    return;
+  }
+
   let seed = null;
   try{
     const r = await fetch("data/brain.json", {cache:"no-store"});
     if(!r.ok) throw new Error("seed unavailable");
     seed = await r.json();
-  }catch(err){
+  }catch{
     seed = {meta:{owner:"Loïc",version:1},items:[]};
   }
   try{
@@ -34,11 +48,23 @@ async function loadData(){
   renderAll();
 }
 
-function persist(message="Modifications enregistrées"){
+async function persist(message="Modifications enregistrées"){
   state.data.meta.updated = new Date().toISOString().slice(0,10);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
-  toast(message);
   renderAll();
+  try{
+    const r = await fetch("/api/brain", {
+      method:"PUT",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(state.data)
+    });
+    const type = r.headers.get("content-type") || "";
+    if(r.ok && type.includes("application/json")){
+      toast(message + " · JSON synchronisé");
+      return;
+    }
+  }catch{}
+  toast(message + " · sauvegarde navigateur");
 }
 
 function items(){ return state.data?.items || []; }
