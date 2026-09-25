@@ -3,123 +3,102 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0b0c10" />
-  <title>Second Brain — Loïc</title>
+  <meta name="theme-color" content="#f7f6f2" />
+  <title>Second Brain — Loïc NEBONNE</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
+  <div class="ambient a1"></div><div class="ambient a2"></div>
   <aside class="sidebar">
-    <a class="brand" href="#dashboard" aria-label="Second Brain">
-      <span class="brand-mark">N</span><span class="brand-copy"><strong>Second Brain</strong><small>Loïc · Nibylo</small></span>
-    </a>
-    <nav id="nav" class="nav">
-      <button class="nav-item active" data-view="dashboard"><span>⌂</span> Vue d'ensemble</button>
-      <button class="nav-item" data-view="projects"><span>◫</span> Projets <em id="navProjectCount">0</em></button>
-      <button class="nav-item" data-view="ideas"><span>✦</span> Incubateur <em id="navIdeaCount">0</em></button>
-      <button class="nav-item" data-view="focus"><span>◎</span> Focus</button>
-      <button class="nav-item" data-view="archive"><span>⌁</span> Archives</button>
+    <div class="identity">
+      <div class="avatar">LN</div>
+      <div><strong>Loïc NEBONNE</strong><small>Second Brain</small></div>
+    </div>
+    <nav id="nav">
+      <button class="nav active" data-view="home"><span>⌂</span> Aujourd’hui</button>
+      <button class="nav" data-view="worlds"><span>◫</span> Univers</button>
+      <button class="nav" data-view="ideas"><span>✦</span> Idées</button>
+      <button class="nav" data-view="decisions"><span>◇</span> Decision Lab</button>
+      <button class="nav" data-view="archive"><span>⌁</span> Archives</button>
     </nav>
-    <div class="sidebar-bottom">
-      <div class="principle"><span class="pulse"></span><div><small>Principe actif</small><strong>Finir &gt; multiplier</strong></div></div>
-      <button id="exportBtn" class="ghost full">Exporter mes données</button>
-      <label class="ghost full file-label">Importer JSON<input id="importInput" type="file" accept="application/json" hidden /></label>
+    <div class="sidebar-foot">
+      <div class="rule"><small>Règle du système</small><strong>1 projet principal / univers</strong></div>
+      <button id="exportBtn" class="subtle">Exporter JSON</button>
+      <label class="subtle file-label">Importer JSON<input id="importInput" type="file" accept="application/json" hidden></label>
     </div>
   </aside>
 
   <main>
     <header class="topbar">
-      <div>
-        <p id="eyebrow" class="eyebrow">Vendredi 25 septembre 2026</p>
-        <h1 id="pageTitle">Bonjour Loïc.</h1>
-      </div>
+      <div><p id="eyebrow">Vendredi 25 septembre 2026</p><h1 id="pageTitle">Ton cerveau, sans le bruit.</h1></div>
       <div class="top-actions">
-        <button id="commandBtn" class="command">⌘ <span>Rechercher</span><kbd>/</kbd></button>
-        <button id="addBtn" class="primary">＋ Nouvelle idée</button>
+        <button id="searchBtn" class="search-btn">⌕ <span>Rechercher</span><kbd>/</kbd></button>
+        <button id="addBtn" class="primary">＋ Capturer</button>
       </div>
     </header>
 
-    <section id="dashboardView" class="view active">
-      <div class="hero-grid">
-        <article class="focus-card">
-          <div class="section-kicker">Maintenant</div>
-          <div id="mainFocus"></div>
-        </article>
-        <article class="signal-card">
-          <div class="signal-head"><span class="section-kicker">Signal du cerveau</span><span id="signalScore" class="score"></span></div>
-          <div id="brainSignal"></div>
-        </article>
-      </div>
-
-      <div class="section-title-row"><div><span class="section-kicker">Portefeuille</span><h2>Ce qui mérite ton énergie</h2></div><button class="text-btn" data-go="projects">Voir tout →</button></div>
-      <div id="activeProjects" class="project-grid"></div>
-
-      <div class="bottom-grid">
-        <section>
-          <div class="section-title-row"><div><span class="section-kicker">Radar</span><h2>À ne pas perdre</h2></div><button class="text-btn" data-go="ideas">Incubateur →</button></div>
-          <div id="radarIdeas" class="radar-list"></div>
-        </section>
-        <section>
-          <div class="section-title-row"><div><span class="section-kicker">Traction</span><h2>Répartition actuelle</h2></div></div>
-          <div id="allocation" class="allocation"></div>
-        </section>
+    <section id="homeView" class="view active">
+      <section id="hero"></section>
+      <div class="section-head"><div><small>Univers actifs</small><h2>Les choses qui comptent vraiment</h2></div><button data-go="worlds">Explorer →</button></div>
+      <div id="homeWorlds" class="world-grid"></div>
+      <div class="split">
+        <section><div class="section-head"><div><small>Prochaines décisions</small><h2>Ce qui attend ton arbitrage</h2></div></div><div id="decisionPreview"></div></section>
+        <section><div class="section-head"><div><small>Radar</small><h2>Idées à ne pas oublier</h2></div></div><div id="ideaPreview"></div></section>
       </div>
     </section>
 
-    <section id="projectsView" class="view">
-      <div class="toolbar">
-        <div id="projectFilters" class="chips"></div>
-        <select id="sortProjects" aria-label="Trier les projets"><option value="priority">Priorité</option><option value="updated">Dernière mise à jour</option><option value="name">Nom</option></select>
-      </div>
-      <div id="allProjects" class="project-grid"></div>
+    <section id="worldsView" class="view">
+      <div class="section-head"><div><small>Structure</small><h2>Univers → projets → idées</h2><p>Les sous-projets servent un univers. Ils ne doivent pas tous devenir des priorités.</p></div></div>
+      <div id="worldsList"></div>
     </section>
 
     <section id="ideasView" class="view">
-      <div class="incubator-head">
-        <div><span class="section-kicker">Parking intelligent</span><h2>Les idées peuvent attendre sans disparaître.</h2><p>Une idée n'entre en production que si elle remplace explicitement un projet actif.</p></div>
-        <div class="idea-counter"><strong id="ideaCount">0</strong><span>idées capturées</span></div>
-      </div>
+      <div class="section-head"><div><small>Incubateur</small><h2>Capturer sans s’engager</h2><p>Une idée peut être bonne sans mériter ton temps maintenant.</p></div><div id="ideaStats" class="stat-bubble"></div></div>
       <div id="ideasList" class="idea-grid"></div>
     </section>
 
-    <section id="focusView" class="view">
-      <div id="focusBoard"></div>
+    <section id="decisionsView" class="view">
+      <div class="decision-hero"><small>Decision Lab</small><h2>Je challenge tes idées pour toi.</h2><p>Le score n’est pas une vérité : c’est un antidote à l’excitation du nouveau. Il force à regarder acquisition, effort, risque et potentiel avant d’ouvrir un chantier.</p></div>
+      <div id="decisionLab"></div>
     </section>
 
     <section id="archiveView" class="view">
-      <div class="incubator-head"><div><span class="section-kicker">Décisions passées</span><h2>Abandonné n'est pas oublié.</h2><p>Les projets arrêtés restent documentés avec la raison de la décision.</p></div></div>
-      <div id="archiveList" class="archive-list"></div>
+      <div class="section-head"><div><small>Mémoire</small><h2>Abandonné ≠ perdu</h2><p>Une décision documentée évite de recommencer le même débat six mois plus tard.</p></div></div>
+      <div id="archiveList"></div>
     </section>
   </main>
 
-  <dialog id="itemDialog">
-    <form id="itemForm" method="dialog">
-      <div class="dialog-head"><div><span class="section-kicker" id="dialogKicker">Nouvel élément</span><h2 id="dialogTitle">Capture rapide</h2></div><button type="button" class="icon-btn" id="closeDialog">×</button></div>
-      <input type="hidden" id="itemId" />
+  <dialog id="detailDialog">
+    <div id="detailContent"></div>
+  </dialog>
+
+  <dialog id="editDialog">
+    <form id="editForm">
+      <div class="dialog-head"><div><small id="editKicker">Élément</small><h2 id="editTitle">Modifier</h2></div><button type="button" class="round" id="closeEdit">×</button></div>
+      <input id="itemId" type="hidden">
       <div class="form-grid">
-        <label class="span-2">Nom<input id="itemName" required maxlength="80" placeholder="Nom du projet ou de l'idée" /></label>
-        <label>Type<select id="itemType"><option value="project">Projet</option><option value="idea">Idée</option></select></label>
-        <label>Univers<select id="itemCategory"><option>Jeux</option><option>Business</option><option>Produit</option><option>Professionnel</option><option>Écriture</option><option>Personnel</option><option>Autre</option></select></label>
-        <label>État<select id="itemStatus"><option value="active">Actif</option><option value="production">Production</option><option value="validation">À valider</option><option value="paused">Pause</option><option value="idea">Idée</option><option value="archived">Archivé</option><option value="published">Publié</option></select></label>
-        <label>Priorité<select id="itemPriority"><option value="1">P1 — Maintenant</option><option value="2">P2 — Important</option><option value="3">P3 — Plus tard</option><option value="4">P4 — Parking</option></select></label>
-        <label class="span-2">Description<textarea id="itemDescription" rows="4" placeholder="Pourquoi ça existe, ce que ça doit devenir..."></textarea></label>
-        <label class="span-2">Prochaine action<input id="itemNext" placeholder="Une action concrète, courte et exécutable" /></label>
-        <label>Progression (%)<input id="itemProgress" type="number" min="0" max="100" value="0" /></label>
-        <label>Énergie<select id="itemEnergy"><option value="low">Faible</option><option value="medium" selected>Moyenne</option><option value="high">Forte</option></select></label>
-        <label class="span-2">Lien<input id="itemLink" type="url" placeholder="https://..." /></label>
-        <label class="span-2">Tags<input id="itemTags" placeholder="mobile, premium, revenu — séparés par des virgules" /></label>
-        <label class="span-2">Note / raison de décision<textarea id="itemNote" rows="3"></textarea></label>
+        <label class="wide">Nom<input id="itemName" required></label>
+        <label>Type<select id="itemType"><option value="project">Projet</option><option value="idea">Idée</option><option value="universe">Univers</option></select></label>
+        <label>Catégorie<select id="itemCategory"><option>Jeux</option><option>Business</option><option>Produit</option><option>Écriture</option><option>Personnel</option><option>Autre</option></select></label>
+        <label>État<select id="itemStatus"><option value="active">Actif</option><option value="production">Production</option><option value="validation">À valider</option><option value="paused">Pause</option><option value="idea">Idée</option><option value="published">Publié</option><option value="completed">Terminé</option><option value="archived">Archivé</option></select></label>
+        <label>Priorité<select id="itemPriority"><option value="1">P1</option><option value="2">P2</option><option value="3">P3</option><option value="4">P4</option></select></label>
+        <label class="wide">Description<textarea id="itemDescription" rows="4"></textarea></label>
+        <label class="wide">Prochaine action<input id="itemNext"></label>
+        <label>Progression<input id="itemProgress" type="number" min="0" max="100"></label>
+        <label>Énergie<select id="itemEnergy"><option value="low">Faible</option><option value="medium">Moyenne</option><option value="high">Forte</option></select></label>
+        <label class="wide">Lien<input id="itemLink" type="url"></label>
+        <label class="wide">Tags<input id="itemTags"></label>
+        <label class="wide">Note<textarea id="itemNote" rows="3"></textarea></label>
       </div>
-      <div class="dialog-actions"><button type="button" class="danger-link" id="deleteBtn">Supprimer</button><div><button type="button" class="ghost" id="cancelBtn">Annuler</button><button class="primary" value="save">Enregistrer</button></div></div>
+      <div class="form-actions"><button type="button" id="deleteBtn" class="danger">Supprimer</button><div><button type="button" id="cancelEdit" class="subtle">Annuler</button><button class="primary">Enregistrer</button></div></div>
     </form>
   </dialog>
 
   <dialog id="searchDialog" class="search-dialog">
-    <div class="search-box"><input id="searchInput" autofocus placeholder="Chercher un projet, une idée, un tag…" /><button type="button" id="closeSearch">×</button></div>
+    <div class="searchbox"><input id="searchInput" placeholder="Projet, idée, tag…"><button id="closeSearch">×</button></div>
     <div id="searchResults"></div>
   </dialog>
-
-  <div id="toast" role="status" aria-live="polite"></div>
+  <div id="toast"></div>
   <script src="app.js"></script>
 </body>
 </html>
