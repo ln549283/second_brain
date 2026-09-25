@@ -483,6 +483,27 @@
       ],
       "note": "Exploration antérieure de plusieurs approches marketplace.",
       "updated": "2026-02-20"
+    },
+    {
+      "id": "nibylo-games",
+      "name": "Nibylo Games",
+      "type": "project",
+      "category": "Business",
+      "status": "active",
+      "priority": 2,
+      "progress": 42,
+      "energy": "medium",
+      "description": "Marque personnelle d’édition de jeux mobiles simples sur Android, regroupant notamment Whichly, Keite, Meowza et Luck or Suck.",
+      "next": "Publier, mesurer, puis décider quels jeux méritent d’être approfondis.",
+      "link": "",
+      "tags": [
+        "jeux",
+        "Android",
+        "éditeur",
+        "Play Store"
+      ],
+      "note": "Projet-cadre qui rassemble plusieurs jeux personnels.",
+      "updated": "2026-09-25"
     }
   ]
 }
