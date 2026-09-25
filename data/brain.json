@@ -504,6 +504,46 @@
       ],
       "note": "Projet-cadre qui rassemble plusieurs jeux personnels.",
       "updated": "2026-09-25"
+    },
+    {
+      "id": "anti-arnaques-entreprises",
+      "name": "Guide anti-arnaques pour nouvelles entreprises",
+      "type": "idea",
+      "category": "Business",
+      "status": "idea",
+      "priority": 4,
+      "progress": 10,
+      "energy": "medium",
+      "description": "Service indépendant pour aider les nouvelles entreprises à distinguer obligations, sollicitations facultatives et arnaques.",
+      "next": "Tester une V0 avec landing page et diagnostic court avant toute application.",
+      "link": "",
+      "tags": [
+        "entrepreneurs",
+        "confiance",
+        "anti-arnaque"
+      ],
+      "note": "Concept pensé pour être simple à lancer et crédible.",
+      "updated": "2026-09-21"
+    },
+    {
+      "id": "users-manuels",
+      "name": "User’s — manuels digitalisés",
+      "type": "project",
+      "category": "Business",
+      "status": "paused",
+      "priority": 4,
+      "progress": 18,
+      "energy": "medium",
+      "description": "Projet entrepreneurial collectif autour d’une plateforme de manuels digitalisés et d’informations utiles liées aux produits.",
+      "next": "Conserver l’historique du projet ; ne reprendre qu’avec un problème client clairement reformulé.",
+      "link": "",
+      "tags": [
+        "plateforme",
+        "manuels",
+        "produits"
+      ],
+      "note": "Projet collectif ancien.",
+      "updated": "2025-05-13"
     }
   ]
 }
