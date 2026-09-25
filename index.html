@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0c10" />
+  <title>Second Brain — Loïc</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <aside class="sidebar">
+    <a class="brand" href="#dashboard" aria-label="Second Brain">
+      <span class="brand-mark">N</span><span class="brand-copy"><strong>Second Brain</strong><small>Loïc · Nibylo</small></span>
+    </a>
+    <nav id="nav" class="nav">
+      <button class="nav-item active" data-view="dashboard"><span>⌂</span> Vue d'ensemble</button>
+      <button class="nav-item" data-view="projects"><span>◫</span> Projets <em id="navProjectCount">0</em></button>
+      <button class="nav-item" data-view="ideas"><span>✦</span> Incubateur <em id="navIdeaCount">0</em></button>
+      <button class="nav-item" data-view="focus"><span>◎</span> Focus</button>
+      <button class="nav-item" data-view="archive"><span>⌁</span> Archives</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="principle"><span class="pulse"></span><div><small>Principe actif</small><strong>Finir &gt; multiplier</strong></div></div>
+      <button id="exportBtn" class="ghost full">Exporter mes données</button>
+      <label class="ghost full file-label">Importer JSON<input id="importInput" type="file" accept="application/json" hidden /></label>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <p id="eyebrow" class="eyebrow">Vendredi 25 septembre 2026</p>
+        <h1 id="pageTitle">Bonjour Loïc.</h1>
+      </div>
+      <div class="top-actions">
+        <button id="commandBtn" class="command">⌘ <span>Rechercher</span><kbd>/</kbd></button>
+        <button id="addBtn" class="primary">＋ Nouvelle idée</button>
+      </div>
+    </header>
+
+    <section id="dashboardView" class="view active">
+      <div class="hero-grid">
+        <article class="focus-card">
+          <div class="section-kicker">Maintenant</div>
+          <div id="mainFocus"></div>
+        </article>
+        <article class="signal-card">
+          <div class="signal-head"><span class="section-kicker">Signal du cerveau</span><span id="signalScore" class="score"></span></div>
+          <div id="brainSignal"></div>
+        </article>
+      </div>
+
+      <div class="section-title-row"><div><span class="section-kicker">Portefeuille</span><h2>Ce qui mérite ton énergie</h2></div><button class="text-btn" data-go="projects">Voir tout →</button></div>
+      <div id="activeProjects" class="project-grid"></div>
+
+      <div class="bottom-grid">
+        <section>
+          <div class="section-title-row"><div><span class="section-kicker">Radar</span><h2>À ne pas perdre</h2></div><button class="text-btn" data-go="ideas">Incubateur →</button></div>
+          <div id="radarIdeas" class="radar-list"></div>
+        </section>
+        <section>
+          <div class="section-title-row"><div><span class="section-kicker">Traction</span><h2>Répartition actuelle</h2></div></div>
+          <div id="allocation" class="allocation"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="projectsView" class="view">
+      <div class="toolbar">
+        <div id="projectFilters" class="chips"></div>
+        <select id="sortProjects" aria-label="Trier les projets"><option value="priority">Priorité</option><option value="updated">Dernière mise à jour</option><option value="name">Nom</option></select>
+      </div>
+      <div id="allProjects" class="project-grid"></div>
+    </section>
+
+    <section id="ideasView" class="view">
+      <div class="incubator-head">
+        <div><span class="section-kicker">Parking intelligent</span><h2>Les idées peuvent attendre sans disparaître.</h2><p>Une idée n'entre en production que si elle remplace explicitement un projet actif.</p></div>
+        <div class="idea-counter"><strong id="ideaCount">0</strong><span>idées capturées</span></div>
+      </div>
+      <div id="ideasList" class="idea-grid"></div>
+    </section>
+
+    <section id="focusView" class="view">
+      <div id="focusBoard"></div>
+    </section>
+
+    <section id="archiveView" class="view">
+      <div class="incubator-head"><div><span class="section-kicker">Décisions passées</span><h2>Abandonné n'est pas oublié.</h2><p>Les projets arrêtés restent documentés avec la raison de la décision.</p></div></div>
+      <div id="archiveList" class="archive-list"></div>
+    </section>
+  </main>
+
+  <dialog id="itemDialog">
+    <form id="itemForm" method="dialog">
+      <div class="dialog-head"><div><span class="section-kicker" id="dialogKicker">Nouvel élément</span><h2 id="dialogTitle">Capture rapide</h2></div><button type="button" class="icon-btn" id="closeDialog">×</button></div>
+      <input type="hidden" id="itemId" />
+      <div class="form-grid">
+        <label class="span-2">Nom<input id="itemName" required maxlength="80" placeholder="Nom du projet ou de l'idée" /></label>
+        <label>Type<select id="itemType"><option value="project">Projet</option><option value="idea">Idée</option></select></label>
+        <label>Univers<select id="itemCategory"><option>Jeux</option><option>Business</option><option>Produit</option><option>Professionnel</option><option>Écriture</option><option>Personnel</option><option>Autre</option></select></label>
+        <label>État<select id="itemStatus"><option value="active">Actif</option><option value="production">Production</option><option value="validation">À valider</option><option value="paused">Pause</option><option value="idea">Idée</option><option value="archived">Archivé</option><option value="published">Publié</option></select></label>
+        <label>Priorité<select id="itemPriority"><option value="1">P1 — Maintenant</option><option value="2">P2 — Important</option><option value="3">P3 — Plus tard</option><option value="4">P4 — Parking</option></select></label>
+        <label class="span-2">Description<textarea id="itemDescription" rows="4" placeholder="Pourquoi ça existe, ce que ça doit devenir..."></textarea></label>
+        <label class="span-2">Prochaine action<input id="itemNext" placeholder="Une action concrète, courte et exécutable" /></label>
+        <label>Progression (%)<input id="itemProgress" type="number" min="0" max="100" value="0" /></label>
+        <label>Énergie<select id="itemEnergy"><option value="low">Faible</option><option value="medium" selected>Moyenne</option><option value="high">Forte</option></select></label>
+        <label class="span-2">Lien<input id="itemLink" type="url" placeholder="https://..." /></label>
+        <label class="span-2">Tags<input id="itemTags" placeholder="mobile, premium, revenu — séparés par des virgules" /></label>
+        <label class="span-2">Note / raison de décision<textarea id="itemNote" rows="3"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button type="button" class="danger-link" id="deleteBtn">Supprimer</button><div><button type="button" class="ghost" id="cancelBtn">Annuler</button><button class="primary" value="save">Enregistrer</button></div></div>
+    </form>
+  </dialog>
+
+  <dialog id="searchDialog" class="search-dialog">
+    <div class="search-box"><input id="searchInput" autofocus placeholder="Chercher un projet, une idée, un tag…" /><button type="button" id="closeSearch">×</button></div>
+    <div id="searchResults"></div>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
