@@ -204,19 +204,24 @@
       ],
       "note": "Concept premium initialement visé autour de 90–120 min.",
       "updated": "2026-09-14",
-      "parentId": "nibylo-games"
+      "parentId": "nibylo-games",
+      "challenge": {
+        "decision": "merge",
+        "score": 68,
+        "reason": "Bon concept, mais il fait désormais doublon avec l’axe plus large Les Lieux Effacés / jeu d’énigmes. À conserver comme scénario, pas comme projet autonome."
+      }
     },
     {
       "id": "kaelis",
       "name": "Kaelis",
-      "type": "idea",
+      "type": "project",
       "category": "Jeux",
-      "status": "idea",
-      "priority": 4,
-      "progress": 12,
+      "status": "active",
+      "priority": 2,
+      "progress": 32,
       "energy": "high",
-      "description": "Projet de jeu antérieur que tu souhaites terminer à terme.",
-      "next": "Documenter la proposition de valeur avant toute reprise.",
+      "description": "Projet narratif principal rattaché à l’univers Lirnos.",
+      "next": "Faire avancer le récit principal avant d’élargir le worldbuilding.",
       "link": "",
       "tags": [
         "jeu",
@@ -293,7 +298,12 @@
       ],
       "note": "Mis de côté au profit de concepts plus différenciés.",
       "updated": "2026-09-01",
-      "parentId": "nibylo-games"
+      "parentId": "nibylo-games",
+      "challenge": {
+        "decision": "archive",
+        "score": 28,
+        "reason": "Prototype court sans différenciation forte identifiée. Archive justifiée."
+      }
     },
     {
       "id": "ninja-fire-ice",
@@ -313,7 +323,12 @@
       ],
       "note": "Abandonné.",
       "updated": "2026-09-01",
-      "parentId": "nibylo-games"
+      "parentId": "nibylo-games",
+      "challenge": {
+        "decision": "archive",
+        "score": 24,
+        "reason": "Concept très générique, sans avantage clair. Archive justifiée."
+      }
     },
     {
       "id": "marches-publics",
@@ -546,9 +561,9 @@
       "name": "Nibylo Games",
       "type": "universe",
       "category": "Business",
-      "status": "active",
+      "status": "production",
       "priority": 1,
-      "progress": 58,
+      "progress": 62,
       "energy": "medium",
       "description": "Studio personnel de jeux mobiles sous la bannière Nibylo Games. Deux jeux sont déjà sortis, d’autres sont en production, validation ou incubation.",
       "next": "Conserver un seul jeu en production principale et faire passer les autres en validation, pause ou incubation.",
@@ -559,7 +574,7 @@
         "éditeur",
         "Play Store"
       ],
-      "note": "Projet-cadre qui rassemble plusieurs jeux personnels.",
+      "note": "Studio personnel déjà concret : deux jeux publiés, un troisième chantier principal en cours, plus plusieurs prototypes et concepts en réserve.",
       "updated": "2026-09-25"
     },
     {
@@ -806,7 +821,12 @@
       ],
       "note": "Idée générique évoquée comme piste de production répétable.",
       "updated": "2026-09-13",
-      "parentId": "nibylo-games"
+      "parentId": "nibylo-games",
+      "challenge": {
+        "decision": "archive",
+        "score": 37,
+        "reason": "Approche trop générique et facilement remplaçable par une nouvelle idée plus forte. Ne mérite pas de place active sans mécanique précise."
+      }
     },
     {
       "id": "unwrap",
@@ -828,7 +848,12 @@
       ],
       "note": "Concept prototypé rapidement en Phaser/TypeScript avec profondeur, animation et révélation progressive.",
       "updated": "2026-09-21",
-      "parentId": "nibylo-games"
+      "parentId": "nibylo-games",
+      "challenge": {
+        "decision": "test",
+        "score": 69,
+        "reason": "Mécanique visuelle simple et testable rapidement. Bonne candidate à prototype court, mais seulement après le jeu actuellement en production."
+      }
     },
     {
       "id": "les-lieux-effaces",
@@ -850,7 +875,12 @@
       ],
       "note": "Concept pensé comme une série de lieux autonomes reliés par une identité commune.",
       "updated": "2026-09-15",
-      "parentId": "nibylo-games"
+      "parentId": "nibylo-games",
+      "challenge": {
+        "decision": "keep",
+        "score": 73,
+        "reason": "Peut devenir une vraie bannière narrative réutilisable pour plusieurs jeux. À garder comme univers, pas comme nouveau chantier immédiat."
+      }
     },
     {
       "id": "budget-enveloppes-famille",
