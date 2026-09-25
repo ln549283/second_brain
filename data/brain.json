@@ -304,6 +304,66 @@
       ],
       "note": "Abandonné : effort/ROI jugé insuffisant face aux contraintes commerciales et économiques.",
       "updated": "2026-09-15"
+    },
+    {
+      "id": "crecheops-ai",
+      "name": "CrècheOps AI",
+      "type": "idea",
+      "category": "Business",
+      "status": "archived",
+      "priority": 4,
+      "progress": 5,
+      "energy": "low",
+      "description": "SaaS vertical pour micro-crèches : plannings, conformité, facturation, appli parents, occupation et listes d’attente.",
+      "next": "Aucune.",
+      "link": "",
+      "tags": [
+        "SaaS",
+        "crèche",
+        "B2B"
+      ],
+      "note": "Abandonné après comparaison avec Meeko : différenciation jugée insuffisante.",
+      "updated": "2025-08-08"
+    },
+    {
+      "id": "institut-julie",
+      "name": "Institut de beauté de Julie",
+      "type": "project",
+      "category": "Business",
+      "status": "paused",
+      "priority": 3,
+      "progress": 24,
+      "energy": "high",
+      "description": "Projet d’institut de beauté à La Réunion autour de soins esthétiques et d’un positionnement premium.",
+      "next": "Ne relancer que si le projet redevient une priorité familiale réelle.",
+      "link": "",
+      "tags": [
+        "institut",
+        "esthétique",
+        "La Réunion"
+      ],
+      "note": "Projet étudié sérieusement puis mis en pause.",
+      "updated": "2025-04-18"
+    },
+    {
+      "id": "instagram-citations",
+      "name": "Compte Instagram de citations",
+      "type": "idea",
+      "category": "Produit",
+      "status": "idea",
+      "priority": 4,
+      "progress": 3,
+      "energy": "low",
+      "description": "Compte Instagram de citations, pensées et phrases courtes avec une identité visuelle cohérente.",
+      "next": "Créer un mini-lot de publications avant de décider si le projet mérite d’être lancé.",
+      "link": "",
+      "tags": [
+        "Instagram",
+        "citations",
+        "contenu"
+      ],
+      "note": "Projet évoqué brièvement, conservé volontairement dans le second cerveau.",
+      "updated": "2026-09-25"
     }
   ]
 }
