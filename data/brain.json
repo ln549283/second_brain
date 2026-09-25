@@ -84,9 +84,11 @@
       "tags": [
         "puzzle",
         "publié",
-        "Nibylo"
+        "Nibylo",
+        "Tango-like",
+        "ronds-losanges"
       ],
-      "note": "Considéré comme une exécution personnelle d’une mécanique éprouvée.",
+      "note": "Considéré comme une exécution personnelle d’une mécanique éprouvée. Le concept a aussi été exploré sous des variantes/noms de travail autour d’un Tango-like minimaliste (ronds et losanges).",
       "updated": "2026-09-21"
     },
     {
@@ -709,6 +711,69 @@
       ],
       "note": "Idée générique évoquée comme piste de production répétable.",
       "updated": "2026-09-13"
+    },
+    {
+      "id": "unwrap",
+      "name": "Unwrap",
+      "type": "idea",
+      "category": "Jeux",
+      "status": "idea",
+      "priority": 4,
+      "progress": 9,
+      "energy": "medium",
+      "description": "Puzzle 2D visuellement satisfaisant où l’on retire des bandes selon leur ordre de superposition afin de révéler progressivement une image.",
+      "next": "Ne reprendre qu’après avoir validé que la mécanique reste intéressante au-delà de l’effet visuel initial.",
+      "link": "",
+      "tags": [
+        "puzzle",
+        "2D",
+        "satisfaisant",
+        "mobile"
+      ],
+      "note": "Concept prototypé rapidement en Phaser/TypeScript avec profondeur, animation et révélation progressive.",
+      "updated": "2026-09-21"
+    },
+    {
+      "id": "les-lieux-effaces",
+      "name": "Les Lieux Effacés",
+      "type": "idea",
+      "category": "Jeux",
+      "status": "idea",
+      "priority": 4,
+      "progress": 8,
+      "energy": "high",
+      "description": "Univers/franchise d’escape games narratifs 2D inspirés de Cube Escape, sans tonalité glauque, avec Appartement 47 comme premier épisode envisagé.",
+      "next": "Conserver comme univers-cadre ; ne développer un deuxième lieu qu’après validation d’Appartement 47 / Project_4.",
+      "link": "",
+      "tags": [
+        "escape",
+        "narratif",
+        "franchise",
+        "énigmes"
+      ],
+      "note": "Concept pensé comme une série de lieux autonomes reliés par une identité commune.",
+      "updated": "2026-09-15"
+    },
+    {
+      "id": "budget-enveloppes-famille",
+      "name": "Budget familial par enveloppes",
+      "type": "project",
+      "category": "Personnel",
+      "status": "active",
+      "priority": 2,
+      "progress": 35,
+      "energy": "low",
+      "description": "Organisation budgétaire familiale visant à isoler les dépenses prévues comme la crèche et à limiter l’argent immédiatement disponible sur le compte commun pour réduire les dépenses impulsives.",
+      "next": "Formaliser des enveloppes simples et un montant réellement disponible pour les dépenses variables.",
+      "link": "",
+      "tags": [
+        "budget",
+        "famille",
+        "enveloppes",
+        "finances"
+      ],
+      "note": "Projet d’organisation personnelle, pas un produit à commercialiser.",
+      "updated": "2026-09-16"
     }
   ]
 }
