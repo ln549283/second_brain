@@ -2,9 +2,9 @@ const STORAGE_KEY="second-brain-loic-v2";
 const state={data:null,view:"home",selected:null};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-const labels={active:"Actif",production:"Production",validation:"À valider",paused:"Pause",idea:"Idée",published:"Publié",completed:"Terminé",archived:"Archivé"};
+const labels={active:"En cours",production:"En production",validation:"En attente",paused:"En pause",idea:"À étudier",published:"Publié",completed:"Terminé",archived:"Abandonné / archivé"};
 const icons={Jeux:"✦",Business:"↗",Produit:"◇",Écriture:"✎",Personnel:"◌",Autre:"·"};
-const statusDot={active:"#2f9f71",production:"#6c5ce7",validation:"#b97818",paused:"#a1a4aa",idea:"#3f7edb",published:"#2f9f71",completed:"#2f9f71",archived:"#a1a4aa"};
+const statusDot={active:"#2f9f71",production:"#6c5ce7",validation:"#d98619",paused:"#a06a14",idea:"#3f7edb",published:"#167c9e",completed:"#238b5c",archived:"#7c8089"};const statusClass=s=>`status status-${s||"idea"}`;
 async function load(){
  let remote=null;
  try{const r=await fetch("/api/brain",{cache:"no-store"});if(r.ok&&(r.headers.get("content-type")||"").includes("json"))remote=await r.json()}catch{}
@@ -51,7 +51,7 @@ function renderHome(){
 function worldCard(x){
  const c=children(x.id), done=c.filter(i=>["published","completed"].includes(i.status)).length;
  const active=c.filter(activeish).length;
- return `<article class="world-card" data-open="${esc(x.id)}"><div class="world-top"><div class="world-icon">${icons[x.category]||"·"}</div><span class="status">${esc(labels[x.status]||x.status)}</span></div><h3>${esc(x.name)}</h3><p>${esc(x.description)}</p><div class="progress"><i style="width:${+x.progress||0}%"></i></div><div class="world-stats"><div><strong>${c.length}</strong><span>éléments</span></div><div><strong>${active}</strong><span>ouverts</span></div><div><strong>${done}</strong><span>terminés</span></div></div></article>`;
+ return `<article class="world-card" data-status="${esc(x.status)}" data-open="${esc(x.id)}"><div class="world-top"><div class="world-icon">${icons[x.category]||"·"}</div><span class="${statusClass(x.status)}">${esc(labels[x.status]||x.status)}</span></div><h3>${esc(x.name)}</h3><p>${esc(x.description)}</p><div class="progress"><i style="width:${+x.progress||0}%"></i></div><div class="world-stats"><div><strong>${c.length}</strong><span>éléments</span></div><div><strong>${active}</strong><span>ouverts</span></div><div><strong>${done}</strong><span>terminés</span></div></div></article>`;
 }
 function miniRow(x,right){
  return `<div class="mini-row" data-open="${esc(x.id)}"><span class="dot" style="background:${statusDot[x.status]||"#aaa"}"></span><div><strong>${esc(x.name)}</strong><small>${esc(labels[x.status]||x.status)} · ${esc(x.category)}</small></div><em>${esc(right)}</em></div>`;
@@ -65,7 +65,7 @@ function renderWorlds(){
  $$("[data-toggle]").forEach(el=>el.onclick=()=>el.closest(".world-section").classList.toggle("open"));bind();
 }
 function childCard(x){
- return `<article class="child-card" data-open="${esc(x.id)}"><div><h4>${esc(x.name)}</h4><p>${esc(x.next||x.description)}</p></div><div class="child-meta"><span class="status">${esc(labels[x.status]||x.status)}</span><span class="status">P${x.priority}</span><span class="status">${+x.progress||0}%</span></div></article>`;
+ return `<article class="child-card" data-status="${esc(x.status)}" data-open="${esc(x.id)}"><div><h4>${esc(x.name)}</h4><p>${esc(x.next||x.description)}</p></div><div class="child-meta"><span class="${statusClass(x.status)}">${esc(labels[x.status]||x.status)}</span><span class="status">P${x.priority}</span><span class="status">${+x.progress||0}%</span></div></article>`;
 }
 function renderIdeas(){
  const list=ideas().sort((a,b)=>(b.challenge?.score||0)-(a.challenge?.score||0));
@@ -89,7 +89,7 @@ function openDetail(id){
  const x=items().find(i=>i.id===id);if(!x)return;state.selected=id;
  const parent=x.parentId?items().find(i=>i.id===x.parentId):null;
  const kids=children(x.id);
- $("#detailContent").innerHTML=`<div class="detail"><div class="dialog-head"><div><small>${esc(x.type)} · ${esc(x.category)}</small><h2>${esc(x.name)}</h2></div><button class="round" data-close>×</button></div><p class="detail-desc">${esc(x.description)}</p><div class="detail-actions">${!["completed","published"].includes(x.status)?'<button class="quick q-complete" data-transition="complete">✓ Terminer</button>':""}${x.status!=="archived"?'<button class="quick q-archive" data-transition="archive">Archiver</button>':""}${x.status!=="paused"&&x.status!=="archived"?'<button class="quick q-pause" data-transition="pause">Pause</button>':""}${!activeish(x)&&x.status!=="archived"?'<button class="quick q-active" data-transition="activate">Réactiver</button>':""}<button class="quick q-edit" data-edit>Modifier</button></div><div class="detail-grid"><div class="detail-box"><small>État</small><strong>${esc(labels[x.status]||x.status)}</strong></div><div class="detail-box"><small>Progression</small><strong>${+x.progress||0}%</strong></div><div class="detail-box"><small>Priorité</small><strong>P${x.priority}</strong></div><div class="detail-box"><small>Dossier</small><span>${parent?esc(parent.name):"Racine"}</span></div><div class="detail-box"><small>Prochaine action</small><span>${esc(x.next||"—")}</span></div><div class="detail-box"><small>Sous-éléments</small><strong>${kids.length}</strong></div></div>${x.challenge?`<div class="challenge"><strong>${x.challenge.score}/100 · ${verdictLabel(x.challenge.decision)}</strong><p>${esc(x.challenge.reason)}</p></div>`:""}${x.note?`<div class="challenge"><strong>Contexte</strong><p>${esc(x.note)}</p></div>`:""}</div>`;
+ $("#detailContent").innerHTML=`<div class="detail"><div class="dialog-head"><div><small>${esc(x.type)} · ${esc(x.category)}</small><h2>${esc(x.name)}</h2></div><button class="round" data-close>×</button></div><p class="detail-desc">${esc(x.description)}</p><div class="detail-actions">${!["completed","published"].includes(x.status)?'<button class="quick q-complete" data-transition="complete">✓ Terminer</button>':""}${x.status!=="archived"?'<button class="quick q-archive" data-transition="archive">Archiver</button>':""}${x.status!=="paused"&&x.status!=="archived"?'<button class="quick q-pause" data-transition="pause">Pause</button>':""}${!activeish(x)&&x.status!=="archived"?'<button class="quick q-active" data-transition="activate">Réactiver</button>':""}<button class="quick q-edit" data-edit>Modifier</button></div><div class="detail-grid"><div class="detail-box"><small>État</small><span class="${statusClass(x.status)}">${esc(labels[x.status]||x.status)}</span></div><div class="detail-box"><small>Progression</small><strong>${+x.progress||0}%</strong></div><div class="detail-box"><small>Priorité</small><strong>P${x.priority}</strong></div><div class="detail-box"><small>Dossier</small><span>${parent?esc(parent.name):"Racine"}</span></div><div class="detail-box"><small>Prochaine action</small><span>${esc(x.next||"—")}</span></div><div class="detail-box"><small>Sous-éléments</small><strong>${kids.length}</strong></div></div>${x.challenge?`<div class="challenge"><strong>${x.challenge.score}/100 · ${verdictLabel(x.challenge.decision)}</strong><p>${esc(x.challenge.reason)}</p></div>`:""}${x.note?`<div class="challenge"><strong>Contexte</strong><p>${esc(x.note)}</p></div>`:""}</div>`;
  $("#detailDialog").showModal();
  $("[data-close]").onclick=()=>$("#detailDialog").close();
  $$("[data-transition]").forEach(b=>b.onclick=()=>transition(id,b.dataset.transition));
@@ -106,7 +106,7 @@ function transition(id,action){
 function openEdit(id=null){
  state.selected=id;const x=id?items().find(i=>i.id===id):null;
  $("#editKicker").textContent=x?"Modifier":"Capturer";$("#editTitle").textContent=x?x.name:"Nouvel élément";
- $("#itemId").value=x?.id||"";$("#itemName").value=x?.name||"";$("#itemType").value=x?.type||"idea";$("#itemCategory").value=x?.category||"Autre";$("#itemStatus").value=x?.status||"idea";$("#itemPriority").value=String(x?.priority||4);$("#itemDescription").value=x?.description||"";$("#itemNext").value=x?.next||"";$("#itemProgress").value=x?.progress??0;$("#itemEnergy").value=x?.energy||"medium";$("#itemLink").value=x?.link||"";$("#itemTags").value=(x?.tags||[]).join(", ");$("#itemNote").value=x?.note||"";$("#deleteBtn").style.visibility=x?"visible":"hidden";$("#editDialog").showModal();
+ $("#itemId").value=x?.id||"";$("#itemName").value=x?.name||"";$("#itemType").value=x?.type||"idea";$("#itemCategory").value=x?.category||"Autre";$("#itemStatus").value=x?.status||"idea";$("#itemStatus").dataset.status=$("#itemStatus").value;$("#itemPriority").value=String(x?.priority||4);$("#itemDescription").value=x?.description||"";$("#itemNext").value=x?.next||"";$("#itemProgress").value=x?.progress??0;$("#itemEnergy").value=x?.energy||"medium";$("#itemLink").value=x?.link||"";$("#itemTags").value=(x?.tags||[]).join(", ");$("#itemNote").value=x?.note||"";$("#deleteBtn").style.visibility=x?"visible":"hidden";$("#editDialog").showModal();
 }
 function slug(v){return v.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,48)||"item"}
 function saveEdit(e){
@@ -133,6 +133,6 @@ $("#itemStatus").onchange=e=>{
  if(s==="archived"){$("#itemPriority").value="4";$("#itemEnergy").value="low"}
  if(s==="idea"){$("#itemPriority").value="4";$("#itemProgress").value=Math.min(20,+$("#itemProgress").value||0)}
 };
-$("#closeEdit").onclick=()=>$("#editDialog").close();$("#cancelEdit").onclick=()=>$("#editDialog").close();$("#editForm").onsubmit=saveEdit;$("#deleteBtn").onclick=removeSelected;$("#exportBtn").onclick=exportData;$("#importInput").onchange=e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value=""};
+$("#itemStatus").onchange=e=>{e.target.dataset.status=e.target.value;const s=e.target.value;if(s==="completed"||s==="published"){$("#itemProgress").value=100;$("#itemEnergy").value="low"}if(s==="archived"){$("#itemPriority").value="4";$("#itemEnergy").value="low"}if(s==="idea"){$("#itemPriority").value="4";$("#itemProgress").value=Math.min(20,+$("#itemProgress").value||0)}};$("#closeEdit").onclick=()=>$("#editDialog").close();$("#cancelEdit").onclick=()=>$("#editDialog").close();$("#editForm").onsubmit=saveEdit;$("#deleteBtn").onclick=removeSelected;$("#exportBtn").onclick=exportData;$("#importInput").onchange=e=>{if(e.target.files[0])importData(e.target.files[0]);e.target.value=""};
 document.addEventListener("keydown",e=>{if(e.key==="/"&&!["INPUT","TEXTAREA","SELECT"].includes(document.activeElement.tagName)){e.preventDefault();search()}});
 load();
